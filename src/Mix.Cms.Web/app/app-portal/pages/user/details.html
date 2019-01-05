@@ -7,25 +7,26 @@
         <div class="row">
             <div class="col-8">
                 <div class="card">
-                    <h6 class="card-header">User information</h6>
+                    <div class="card-header">
+            <h3 class="card-title">User information</h3></div>
                     <div class="card-body">
 
                         <div class="form-group">
-                            <label class="control-label">Username</label>
+                            <label class="form-label">Username</label>
                             <input type="text" class="form-control" ng-model="activedUser.username">
                         </div>
                         <div class="row">
                             <div class="col form-group">
-                                <label class="control-label">First Name</label>
+                                <label class="form-label">First Name</label>
                                 <input type="text" class="form-control" ng-model="activedUser.firstName">
                             </div>
                             <div class="col form-group">
-                                <label class="control-label">Last Name</label>
+                                <label class="form-label">Last Name</label>
                                 <input type="text" class="form-control tags" ng-model="activedUser.lastName">
                             </div>
                         </div>
 
-                        <label class="control-label">Active roles</label>
+                        <label class="form-label">Active roles</label>
                         <div class="tab-pane" ng-if="activedUser.userRoles.length>0">
                             <navs data="activedUser.userRoles" callback="updateRoleStatus(nav)"></navs>
                         </div>

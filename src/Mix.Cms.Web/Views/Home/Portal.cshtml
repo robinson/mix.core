@@ -1,29 +1,26 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
     ViewData["Description"] = "Your powerful dashboard is here";
-    Layout = "_LayoutPortal_Angular";
+    Layout = "_LayoutPortal2_Angular";
 }
-<div ng-app="MixPortal" ng-init="init()" ng-controller="AppPortalController">
-    <div class="loader-container" ng-show="isBusy">
-       <div class="loader">
-            <span>{</span><span>}</span>
-        </div>
-    </div>
-
-    <header-nav settings="settings" bread-crumbs="breadCrumbs"></header-nav>
-    <div class="container-fluid wrapper">
+<div ng-app="MixPortal" ng-init="init()" ng-controller="AppPortalController" class="h-100">
+<header-nav settings="settings" bread-crumbs="breadCrumbs"></header-nav>
+       
+    <!-- Page Content Holder -->
+    <div class="container-fluid wrapper mh-100">
         <div class="row flex-xl-nowrap">
-            <main-side-bar ng-if="isAdmin"></main-side-bar>
+            <main-side-bar class="col-md-2 w-100 bdrr" ng-if="isAdmin"></main-side-bar>
 
-            <main-side-bar-dynamic ng-if="roles" roles="roles" actived-role="roles[0]"></main-side-bar-dynamic>
-
-            <!-- <main class="py-md-4 px-md-2 sw-content" role="main"> -->
-            <main class="py-md-3 px-md-2 sw-content w-100 position-relative" role="main">
+            <!-- /.Sidebar Holder -->
+            <main class="col-md-10 py-3 px-md-2 sw-content w-100" role="main">
                 <section class="content container">
-                    <jumbotrons ng-if="isInit" tag-name="pageTagName" tag-type="pageTagType"></jumbotrons>
-                    <div class="{{pageClass}}" ng-view>
-                         
+                    <jumbotrons ng-if="isInit" tag-name="pageTagName" tag-type="pageTagType"></jumbotrons>                   
+                <div class="dimmer" ng-class="{'active': isBusy}">
+                    <div class="loader" ></div>
+                    <div class="{{pageClass}} dimmer-content" ng-view>
+                        
                     </div>
+                </div>
                     <medias ng-if="isInit"></medias>
                     <modal-articles ng-if="isInit"></modal-articles>
                     <hub-messages ng-if="isInit"></hub-messages>
@@ -33,18 +30,7 @@
                     <preview-popup ng-if="isInit" preview-object="previewObject"></preview-popup>
                 </section>
 
-                <footer class="footer d-block">
-                    <div class="container-fluid">
-                        <nav>
-                            <p class="copyright text-center">
-                                <script>
-                                    document.write(new Date().getFullYear());
-                                </script>
-                                <a href="http://www.mixcore.org">mixcore</a>, made on Earth by humans.
-                            </p>
-                        </nav>
-                    </div>
-                </footer>
+                
             </main>
         </div>
     </div>

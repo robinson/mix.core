@@ -3,7 +3,7 @@
     <form ng-class="{'submitted': submitted}" ng-submit="save(activedData)">
         <actions preview-url="activedData.detailsUrl" back-url="'/portal/product/list'"></actions>
         <div class="row">
-            <section class="col-8">
+            <section class="col-md-8 leftMainSection">
                 <div class="row">
                     <div class="col-lg-12">
                         <product-main product="activedData"></product-main>
@@ -40,25 +40,26 @@
                     </tabs-v>
                 </div>
             </section>
-            <section class="col-4" style="padding-left:0">
+            <section class="col-md-4 rightMainSection" style="padding-left:0">
                 <cultures is-clone="activedData.isClone" data="activedData.cultures"></cultures>
                 <url-alias url-alias="activedData.urlAlias"></url-alias>
                 <div class="card">
-                    <h6 class="card-header">
+                    <div class="card-header">
+            <h3 class="card-title">
                         Info
-                    </h6>
+                    </h3></div>
                     <div class="card-body">
                         <statuses status="activedData.status">
                         <div class="form-group">
                             <span class="switch">
-                                <label>
+                                <label class="form-label">
                                     <input type="checkbox" ng-model="activedData.isClone" class="switch">
                                     Clone
                                 </label>
                             </span>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Created Date Time</label>
+                            <label class="form-label">Created Date Time</label>
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
@@ -67,7 +68,7 @@
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label class="control-label">Created By</label>
+                            <label class="form-label">Created By</label>
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>

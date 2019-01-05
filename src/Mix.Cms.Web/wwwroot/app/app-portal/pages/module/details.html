@@ -4,7 +4,7 @@
 
         <actions preview-url="activedData.detailsUrl" content-url="contentUrl" back-url="'/portal/module/list'"></actions>
         <div class="row">
-            <section class="col-8">
+            <section class="col-md-8 leftMainSection">
                 <div class="row">
                     <div class="col-lg-12">
                         <module-main module="activedData">
@@ -13,11 +13,12 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card">
-                            <h6 class="card-header">
+                            <div class="card-header">
+            <h3 class="card-title">
                                 Module Attributes
                                 <a ng-click="addAttr()" class="btn btn-primary btn-sm float-right text-white">Add New</a>
                                 <a ng-click="generateForm()" class="btn btn-primary btn-sm float-right text-white mr-2">Generate Form</a>
-                            </h6>
+                            </h3></div>
                             <div class="card-body p-1">
                                 <input type="hidden" asp-for="Id">
                                 <input type="hidden" asp-for="Specificulture">
@@ -150,24 +151,25 @@
                     </div>
                 </div>
             </section>
-            <section class="col-4" style="padding-left:0">
+            <section class="col-md-4 rightMainSection" style="padding-left:0">
                 <cultures is-clone="activedData.isClone" data="activedData.cultures"></cultures>
                 <div class="card">
-                    <h6 class="card-header">
+                    <div class="card-header">
+            <h3 class="card-title">
                         Info
-                    </h6>
+                    </h3></div>
                     <div class="card-body">
                         <statuses status="activedData.status">
                             <div class="form-group">
                                 <span class="switch">
-                                    <label>
+                                    <label class="form-label">
                                         <input type="checkbox" ng-model="activedData.isClone" class="switch">
                                         Clone
                                     </label>
                                 </span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Created Date Time</label>
+                                <label class="form-label">Created Date Time</label>
                                 <div class="input-group input-group-sm mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
@@ -177,7 +179,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">Created By</label>
+                                <label class="form-label">Created By</label>
                                 <div class="input-group input-group-sm mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>

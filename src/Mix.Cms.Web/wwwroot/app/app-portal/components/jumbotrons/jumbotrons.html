@@ -1,5 +1,20 @@
-<div ng-switch="$ctrl.tagType">
-    <div ng-switch-when="0">        
+<div ng-if="$ctrl.tagName" ng-switch="$ctrl.tagType">
+        <div ng-switch-when="0">    
+            <div class="page-header mb-2 mt-0">
+                <h1 class="text-capitalize page-title">
+                    {{$ctrl.tagName}}
+                </h1>
+            </div>
+        </div>
+        <div ng-switch-when="1">    
+            <div class="page-header mb-2 mt-0">
+                <h1 class="text-capitalize page-title">
+                    Add {{$ctrl.tagName}}
+                </h1>
+            </div>
+        </div>
+</div>
+    <!-- <div ng-switch-when="0">        
         <h1 class="display-4"><span class="text-capitalize" ng-bind="$ctrl.tagName">
         </span></h1>
         <hr ng-if="$ctrl.tagName" class="my-3">    
@@ -8,7 +23,7 @@
         <h1 class="display-4">Add <span class="text-capitalize" ng-bind="$ctrl.tagName">
         </span></h1>
         <hr ng-if="$ctrl.tagName" class="my-3">  
-    </div>
+    </div> -->
 
 <!-- <div class="row position-sticky" style="top: 4rem; z-index: 12;">
     <div class="col-12">
@@ -41,4 +56,3 @@
         </div>
     </div>
 </div> -->
-</div>

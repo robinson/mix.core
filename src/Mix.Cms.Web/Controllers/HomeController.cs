@@ -92,6 +92,21 @@ namespace Mix.Cms.Web.Controllers
         }
 
         [HttpGet]
+        [Route("portal2")]
+        [Route("admin2")]
+        [Route("portal2/{pageName}")]
+        [Route("portal2/{pageName}/{type}")]
+        [Route("portal2/{pageName}/{type}/{param}")]
+        [Route("portal2/{pageName}/{type}/{param}/{param1}")]
+        [Route("portal2/{pageName}/{type}/{param}/{param1}/{param2}")]
+        [Route("portal2/{pageName}/{type}/{param}/{param1}/{param2}/{param3}")]
+        [Route("portal2/{pageName}/{type}/{param}/{param1}/{param2}/{param3}/{param4}")]
+        public IActionResult Portal2()
+        {
+            return View();
+        }
+
+        [HttpGet]
         [Route("init")]
         [Route("init/{page}")]
         public IActionResult Init(string page)

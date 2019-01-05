@@ -1,7 +1,35 @@
 <div id="sidebar" class="sw-sidebar" ng-init="$ctrl.init()">
-        <div class="perfect-scroll">
-        <ul class="sw-links" id="sw-docs-nav" data-children=".sw-toc-item">
-            <!--<portal-search />-->
+    <!-- Sidebar Holder -->
+            <div class="row sw-sidebar d-lg-flex p-2 collapse" id="headerMenuCollapse">
+                <div class="col-md-12">
+                        <form class="input-icon my-lg-0">
+                            <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
+                            <div class="input-icon-addon">
+                            <i class="fe fe-search"></i>
+                            </div>
+                        </form>
+                        </div>
+                <div class="col-md-12 list-group list-group-transparent mb-0 bdrb bdrt py-2 mt-4">
+                        <a ng-repeat="item in $ctrl.items" href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <main-side-bar-item item="item"></main-side-bar-item>
+                        </a>
+                     
+                        <!-- 
+                        <a href="optiongroup.html" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <span class="icon mr-3"><i class="fe fe-settings"></i></span>Settings
+                        </a> -->
+                      </div>
+                      <a href="optiongroup.html" class="list-group-item list-group-item-action d-flex align-items-center mt-4" style="background-color: none; border:0;">
+                            <span class="icon mr-3"><i class="fe fe-settings"></i></span>Settings
+                    </a>
+                <!-- <div class="col-md-12 mt-4">
+                    <button type="button" class="btn btn-secondary btn-block">Cancel</button>                            
+                    <button type="submit" href="#" id="btnToSubmit" class="btn btn-primary btn-block">Save</button>                            
+                </div> -->
+            </div>
+      
+        <!-- <div class="perfect-scroll">
+     
             <form method="post" class="sw-search d-flex align-items-center ng-pristine ng-valid" action="/admin/search">
                 <input type="search" class="form-control" id="search-input" name="keyword" placeholder="Search for..." aria-label="Search for..." autocomplete="off">
                 <button class="btn btn-light sw-search-docs-toggle d-md-none p-0 ml-3" type="submit" data-toggle="collapse" data-target="#sw-docs-nav" aria-controls="sw-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation">
@@ -12,13 +40,13 @@
                 </button>
                 <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KOuD896zE9FpXyo3z4qUnITyqLJObd-8sWCHWBMAbgKpoBDjCxTTaK-fn9pkbeyWi6aiOu15-1O4FCi0iYHV22A7_C_8nl1bjT9gWUpGWTRcxiso71cJhqbhcBxhsub88XHpqp3OAmg51CAe1EdWDBDA9MJ-Ei82UcnxV3Pa_P6peDY3ZqTytpkWhQlw7N7hA" autocomplete="off"></form>
     
-            <!-- ARTICLE -->
+     
             <li ng-repeat="item in $ctrl.items">
                 <main-side-bar-item item="item"></main-side-bar-item>
             </li>
             <hr>
     
-            <!-- SETTING -->
+       
             <li class="sw-toc-item mt-1 mb-1">
     
                 <div class="inner">
@@ -89,6 +117,6 @@
             <li class="sw-toc-item mt-1 mb-1"></li>
         </ul>
     </div>
-        <div class="sidebar-background"></div>
+        <div class="sidebar-background"></div> -->
     
     </div>

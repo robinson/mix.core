@@ -1,25 +1,37 @@
 <div class="row">
-    <div class="col-sm-12">
+    <div class="w-100">
         <div class="card">
-            <h6 class="card-header">
+            <div class="card-header">
+            <h3 class="card-title">
                 <div class="row">
-                    <span class="switch switch-sm">
-                    <input type="checkbox" ng-model="$ctrl.isClone" id="isClone" class="switch">
+                    <label class="custom-switch">
+                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" ng-model="$ctrl.isClone" id="isClone">
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">Localize</span>
+                    </label>
+                    <!-- <span class="switch switch-sm">
+                    <input type="checkbox" class="switch">
                     <label class="switch mb-0" for="isClone">                        
                         <span>Localization</span>
-                    </label>
-                </span>
+                    </label> -->
+                
                 </div>
-            </h6>
+            </h3>
+        </div>
             <div class="card-body" ng-show="$ctrl.isClone">                
-                <div class="row" ng-repeat="culture in $ctrl.data">
-                    <span class="switch switch-sm">
+                <div class="row custom-switches-stacked" ng-repeat="culture in $ctrl.data">
+                    <!-- <span class="switch switch-sm">
                         <input type="checkbox" ng-model="culture.isSupported" id="culture_{{$index}}" class="switch">
                         <label class="switch" for="culture_{{$index}}" style="overflow: hidden;text-overflow: ellipsis;">
                             <span class="flag-icon {{culture.icon}}"></span>
                             <span ng-bind="culture.description"></span>
                         </label>
-                    </span>
+                    </span> -->
+                    <label class="custom-switch">
+                        <input type="radio" name="option" value="1" class="custom-switch-input" checked="" ng-model="culture.isSupported" id="culture_{{$index}}">
+                        <span class="custom-switch-indicator"></span>
+                        <span class="custom-switch-description">{{culture.description}}</span>
+                    </label>                           
                 </div>
             </div>
         </div>

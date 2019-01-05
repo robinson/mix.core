@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand flex-column flex-md-row sw-navbar position-sticky">
+<!-- <header class="navbar navbar-expand flex-column flex-md-row sw-navbar position-sticky">
     <a class="navbar-brand mr-0 mr-md-2" href="/{{$ctrl.settings.lang}}" target="_blank" aria-label="mixcore">
         <img src="/css/portal/img/mixcore-logo-blue.png" alt="mixcore" width="35">
     </a>
@@ -55,4 +55,109 @@
     <div class="avatar" ng-if="$ctrl.avatar">
         <img class="rounded-circle sw-avatar" alt="200x200" ng-src="{{$ctrl.avatar}}" data-holder-rendered="true" style="width: 36px; height: 36px;">
     </div>
-</header>
+</header> -->
+
+<div class="header">
+        <div class="container-fluid">
+            <div class="d-flex">
+                    
+            <a class="mr-auto header-brand ml-7" href="/{{$ctrl.settings.lang}}">
+                <img src="/css/portal/img/mixcore-logo-blue.png" class="header-brand-img" alt="mixcore"> {{$ctrl.getConfiguration('SiteName',false,'mixcore')}}
+            </a>  
+            
+            <!-- <button type="button" id="sidebarCollapse" class="btn btn-link" ng-click="$ctrl.toggleSidebar()">
+                <span class="mi mi-List"></span>
+            </button>
+        
+            <div class="navbar-nav-scroll">
+                <breadcrumbs bread-crumbs="$ctrl.breadCrumbs"></breadcrumbs>
+            </div>     -->
+
+            <div class="d-flex order-lg-2 ml-auto  mr-md-7">
+               <div class="nav-item d-none d-md-flex">
+                <!-- <a href="" class="btn btn-sm btn-outline-primary" target="_blank">Source code</a> -->
+                <a class="nav-link p-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="flag-icon {{$ctrl.settings.langIcon}}"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" ng-repeat="culture in $ctrl.settings.cultures" ng-class="{active: culture.specificulture === $ctrl.settings.lang}" href="#" ng-click="$ctrl.changeLang(culture.specificulture, culture.icon);">
+                            <span class="flag-icon {{culture.icon}}"></span>
+                            <span ng-bind="culture.description"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="dropdown d-none d-md-flex">
+                <a class="nav-link icon" data-toggle="dropdown">
+                    <i class="fe fe-bell"></i>
+                    <span class="nav-unread"></span>
+                </a>                
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a href="#" class="dropdown-item d-flex">
+                    <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/male/41.jpg)"></span>
+                    <div>
+                        <strong>Nathan</strong> pushed new commit: Fix page load performance issue.
+                        <div class="small text-muted">10 minutes ago</div>
+                    </div>
+                    </a>
+                    <a href="#" class="dropdown-item d-flex">
+                    <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/female/1.jpg)"></span>
+                    <div>
+                        <strong>Alice</strong> started new task: UI design.
+                        <div class="small text-muted">1 hour ago</div>
+                    </div>
+                    </a>
+                    <a href="#" class="dropdown-item d-flex">
+                    <span class="avatar mr-3 align-self-center" style="background-image: url(demo/faces/female/18.jpg)"></span>
+                    <div>
+                        <strong>Rose</strong> deployed new version of NodeJS REST Api V3
+                        <div class="small text-muted">2 hours ago</div>
+                    </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-center text-muted-dark">Mark all as read</a>
+                </div>
+                </div>
+                <div id="dropdownSettings" class="dropdown">
+                <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                    <img class="avatar" ng-src="{{$ctrl.avatar}}"></span>
+                    <span class="ml-2 d-none d-lg-block">
+                    <span class="text-default">Jane Pearson</span>
+                    <small class="text-muted d-block mt-1">Administrator</small>
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" ng-if="$ctrl.settings">
+                        <a class="dropdown-item" href="#">
+                        <i class="dropdown-icon fe fe-user"></i> Profile
+                        </a>
+                        <a class="dropdown-item" href="#" ng-click="$ctrl.generateSitemap()" alt="sitemap">
+                        <i class="dropdown-icon mi mi-AllApps"></i> Site Map
+                        </a>
+                        <a class="dropdown-item" href="#" ng-click="$ctrl.addFavorite()">
+                            <i class="dropdown-icon mi mi-FavoriteList"></i> Add favorite
+                        </a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-hub-messages">
+                        <span class="float-right"><span class="badge badge-primary">6</span></span>
+                        <i class="dropdown-icon mi mi-ActionCenter"></i> Hub messages
+                        </a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-files">
+                        <i class="dropdown-icon mi mi-Media"></i> Quick media
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                        <i class="dropdown-icon fe fe-help-circle"></i> Need help?
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="dropdown-icon fe fe-settings"></i> Settings
+                        </a>
+                        <a class="dropdown-item" href="#" ng-click="$ctrl.logOut()" rel="noopener" aria-label="Logout">
+                        <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="header-toggler d-lg-none m-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                <span class="header-toggler-icon"></span>
+            </a>
+            </div>
+        </div>
+</div>

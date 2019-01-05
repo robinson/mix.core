@@ -87,8 +87,8 @@
     "inputFiles": [
       "wwwroot/lib/portal/**/*.css",
       "wwwroot/lib/portal/**/*.*.css",
-      "wwwroot/css/portal/**/*.css",
-      "wwwroot/css/portal/**/*.*.css"
+      "wwwroot/css/portal2/**/*.css",
+      "wwwroot/css/portal2/**/*.*.css"
     ]
   },
   {

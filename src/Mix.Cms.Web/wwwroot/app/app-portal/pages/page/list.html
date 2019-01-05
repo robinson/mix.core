@@ -1,4 +1,81 @@
-<section class="card manual">
+<div class="card">
+        <div class="card-header">
+                <filter-list request="request" callback="getList(pageIndex)"></filter-list>
+        </div>
+        <div class="table-responsive">
+          <table class="table card-table table-vcenter text-nowrap sortable table-sm table-hover" id="list-page" cellspacing="0" ng-init="getList()">
+            <thead>
+              <tr>
+                <th class="w-1">#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created date</th>
+                <th>By</th>
+
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="sortable-item" style="border: 1px;">
+                    <tr class="" sort-model="category" ng-repeat="item in data.items track by $index" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-page{{item.id}}-childs" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+        
+        
+                        <td class="drag-header">
+        
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-light"><span class="oi oi-chevron-top small"></span></button>
+                                <button type="button" class="btn btn-light"><span class="oi oi-chevron-bottom small"></span></button>
+                            </div>
+                        </td>
+        
+                        <td>
+                            {{item.title}}
+                        </td>
+                        <td>
+                            <small>
+                                {{shortString(item.excerpt,50)}}
+                            </small>
+                        </td>
+                        <td>
+                            <small>
+                                {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
+                            </small>
+                        </td>
+                        <td>
+                            {{item.createdBy}}
+                        </td>
+     
+                        <td>
+                            <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+        
+                                <a ng-if="item.childs.length>0" class="btn btn-light" data-toggle="collapse" href="" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+                                    <span class="oi oi-list text-primary"></span>
+                                </a>
+                              
+                                <a href="/portal/page/details/{{item.id}}" class="btn btn-light"><span class="fe fe-edit text-primary"></span></a>
+                                <a href="{{item.detailsUrl}}" target="_blank" class="btn btn-light"><span class="fe fe-eye text-primary"></span></a>
+                               <a ng-if="item.type==2" href="/portal/page/page-article/list/{{item.id}}" class="btn btn-light">
+                                    <span class="fe fe-list text-info"></span>
+                                </a> 
+                                 <!-- 
+                                <a ng-if="item.type==2" href="#" data-toggle="modal" data-target="#modal-articles" class="btn btn-light">
+                                    <span class="fas fa-list text-info"></span>
+                                </a>-->
+                                <a href="#" class="btn btn-light" ng-click="remove(item.id)">
+                                    <span class="fe fe-x text-danger"></span>
+                                </a>
+                            </div>
+                        </td>
+                </tr>                                             
+        </tbody>
+           
+          </table>
+        </div>
+        <div class="card-footer bdrt-0">
+                <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end mb-0" a-class="page-link" paging-action="getList(page-1)" scroll-top="true"></paging>
+        </div>
+      </div>
+<!-- 
+<section class="card pt-5 pr-5 pl-5 manual">
     <filter-list request="request" callback="getList(pageIndex)"></filter-list>
 
     <table id="list-page" class="table table-sm table-hover sortable" cellspacing="0" ng-init="getList()">
@@ -27,7 +104,8 @@
         </thead>
 
         <tbody class="sortable-item" ng-repeat="item in data.items track by $index" style="border: 1px;">
-            <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-page{{item.id}}-childs" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+            <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-page{{item.id}}-childs"
+                role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
 
 
                 <td class="drag-header">
@@ -60,7 +138,8 @@
                 <td>
                     <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
 
-                        <a ng-if="item.childs.length>0" class="btn btn-light" data-toggle="collapse" href="" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+                        <a ng-if="item.childs.length>0" class="btn btn-light" data-toggle="collapse" href="" role="button"
+                            aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
                             <span class="oi oi-list text-primary"></span>
                         </a>
                       
@@ -69,10 +148,7 @@
                        <a ng-if="item.type==2" href="/portal/page/page-article/list/{{item.id}}" class="btn btn-light">
                             <span class="fas fa-list text-info"></span>
                         </a> 
-                         <!-- 
-                        <a ng-if="item.type==2" href="#" data-toggle="modal" data-target="#modal-articles" class="btn btn-light">
-                            <span class="fas fa-list text-info"></span>
-                        </a>-->
+  
                         <a href="#" class="btn btn-light" ng-click="remove(item.id)">
                             <span class="oi oi-x text-danger"></span>
                         </a>
@@ -82,7 +158,8 @@
             <tr>
                 <td colspan="7" style="padding:0">
                     <div class="collapse" id="collapse-page{{item.id}}-childs" data-parent="#list-page">
-                        <table class="table table-sm table-hover mb-0" cellspacing="0" style="background-color: #f5f5f5;" ng-if="item.childs.length>0">
+                        <table class="table table-sm table-hover mb-0" cellspacing="0" style="background-color: #f5f5f5;"
+                            ng-if="item.childs.length>0">
                             <thead style="font-size:small; font-weight:normal">
                                 <tr>
 
@@ -133,10 +210,13 @@
                                     </td>
 
                                     <td>
-                                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group"
+                                            aria-label="Actions">
                                             <a href="/portal/page/details/{{c.id}}" class="btn btn-light"><span class="oi oi-pencil text-primary small"></span></a>
-                                            <a href="{{c.detailsUrl}}" target="_blank" class="btn btn-light"><span class="oi oi-eye text-primary small"></span></a>
-                                            <a ng-if="item.type==2" href="/portal/page/page-article/list/{{c.id}}" class="btn btn-light">
+                                            <a href="{{c.detailsUrl}}" target="_blank" class="btn btn-light"><span
+                                                    class="oi oi-eye text-primary small"></span></a>
+                                            <a ng-if="item.type==2" href="/portal/page/page-article/list/{{c.id}}"
+                                                class="btn btn-light">
                                                 <span class="fas fa-list text-info"></span>
                                             </a>
                                             <a ng-click="removePage(item.id);" class="btn btn-light">
@@ -152,5 +232,6 @@
             </tr>
         </tbody>
     </table>
-    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end" a-class="page-link" paging-action="getList(page-1)" scroll-top="true"></paging>
-</section>
+    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end"
+        a-class="page-link" paging-action="getList(page-1)" scroll-top="true"></paging>
+</section> -->

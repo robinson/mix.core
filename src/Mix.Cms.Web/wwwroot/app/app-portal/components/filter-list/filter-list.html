@@ -1,4 +1,4 @@
-<div class="row mb-3" ng-init="$ctrl.init()">
+<div class="row" ng-init="$ctrl.init()">
     <div class="col-5"> 
         <div class="" role="toolbar" aria-label="Toolbar with button groups">
             <div class="input-group input-group-sm mr-2" role="group" aria-label="First group">
@@ -12,7 +12,7 @@
                 <select class="btn custom-select custom-select-sm col-3" ng-model="$ctrl.request.direction" ng-change="$ctrl.callback({pageIndex: 0})">
                     <option ng-repeat="item in $ctrl.directions track by $index" value="{{item.value}}">{{item.title}}</option>
                 </select>
-                <select class="btn custom-select custom-select-sm col-3" ng-model="$ctrl.request.pageSize" ng-change="$ctrl.callback({pageIndex: 0})">
+                <select class="btn custom-select custom-select-sm col-2" ng-model="$ctrl.request.pageSize" ng-change="$ctrl.callback({pageIndex: 0})">
                     <option ng-repeat="item in $ctrl.pageSizes track by $index" value="{{item}}">{{item}}</option>
                 </select>
             </div>

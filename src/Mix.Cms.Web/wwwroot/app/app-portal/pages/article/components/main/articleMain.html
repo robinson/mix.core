@@ -1,15 +1,15 @@
 <div class="card" ng-if="$ctrl.article!=null">
-    <h6 class="card-header">
-        Main Content
-    </h6>
+    <div class="card-header">
+        <h3 class="card-title">Main Content</h3>
+    </div>
     <div class="card-body">
 
         <div class="form-group">
-            <label>Title</label>
+            <label class="form-label">Title</label>
             <input type="text" class="form-control form-control-lg" ng-model="$ctrl.article.title" ng-blur="$ctrl.generateSEO()">
         </div>
         <div class="form-group">
-            <label>Excerpt</label>
+            <label class="form-label">Excerpt</label>
             <textarea class="form-control form-control-lg" ng-model="$ctrl.article.excerpt">{{$ctrl.article.excerpt}}</textarea>
             
             <!-- <trumbowyg ng-model="$ctrl.article.excerpt"
@@ -18,7 +18,7 @@
                       </trumbowyg> -->
         </div>
         <div class="form-group">
-            <label>Body content</label>
+            <label class="form-label">Body content</label>
             <trumbowyg ng-model="$ctrl.article.content" placeholder="Start typing some text..." options="{}">
                       </trumbowyg>
             

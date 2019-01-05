@@ -6,23 +6,23 @@
 <form ng-show="$ctrl.isShow" ng-class="{'submitted': submitted}" ng-submit="$ctrl.book()" ng-init="$ctrl.init()">
     <div ng-hide="$ctrl.submitted">
         <div class="form-group">
-            <label class="control-label">Quantity</label>
+            <label class="form-label">Quantity</label>
             <input class="form-control" required type="number" ng-model="$ctrl.order.quantity" placeholder="Quantity">
         </div>        
         <div class="form-group">
-            <label class="control-label">Name</label>
+            <label class="form-label">Name</label>
             <input class="form-control" required type="text" ng-model="$ctrl.order.name" placeholder="Name">
         </div>
         <div class="form-group">
-            <label class="control-label">Email</label>
+            <label class="form-label">Email</label>
             <input class="form-control" required type="email" ng-model="$ctrl.order.email" placeholder="Email">
         </div>
         <div class="form-group">
-            <label class="control-label">Phone</label>
+            <label class="form-label">Phone</label>
             <input class="form-control" required type="text" ng-model="$ctrl.order.phone" placeholder="Phone">
         </div>
         <div class="form-group">
-            <label class="control-label">Message</label>
+            <label class="form-label">Message</label>
             <textarea class="form-control" ng-model="$ctrl.order.message" placeholder="message"></textarea>
         </div>
         <div class="row">

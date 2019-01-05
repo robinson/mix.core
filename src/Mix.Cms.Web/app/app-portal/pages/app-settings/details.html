@@ -4,9 +4,10 @@
 
         <div class="row justify-content-md-center">
             <div class="card col-6">
-                <h6 class="card-header">
+                <div class="card-header">
+            <h3 class="card-title">
                     App Settings
-                </h6>
+                </h3></div>
                 <div class="card-body">
                     <div class="row">
                         <section class="col-lg-12">
@@ -20,7 +21,7 @@
                                 </span>
 
                                 <!-- 
-                                <label class="control-label">IsInit {{appSettings.GlobalSettings.IsInit}}</label>
+                                <label class="form-label">IsInit {{appSettings.GlobalSettings.IsInit}}</label>
                                 <input type="checkbox" class="form-control" ng-model="appSettings.GlobalSettings.IsInit"></input> -->
                             </div>
                             <div class="form-group">
@@ -35,16 +36,16 @@
                                     </span>
 
 
-                                    <!-- <label class="control-label">IsHttps {{appSettings.GlobalSettings.IsHttps}}</label>
+                                    <!-- <label class="form-label">IsHttps {{appSettings.GlobalSettings.IsHttps}}</label>
                                     <input type="checkbox" class="form-control" ng-model="appSettings.GlobalSettings.IsHttps"></input> -->
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label class="control-label">Connection Strings for CMS</label>
+                                        <label class="form-label">Connection Strings for CMS</label>
                                         <textarea rows="5" class="form-control" ng-model="appSettings.ConnectionStrings.MixCmsConnection"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label">Connection Strings for Account</label>
+                                        <label class="form-label">Connection Strings for Account</label>
                                         <textarea rows="5" class="form-control" ng-model="appSettings.ConnectionStrings.MixAccountConnection"></textarea>
                                     </div>
 
@@ -55,21 +56,22 @@
         </div>
         <div class="row justify-content-md-center">
             <div class="card col-6">
-                <h6 class="card-header">
+                <div class="card-header">
+            <h3 class="card-title">
                     Default settings
-                </h6>
+                </h3></div>
                 <div class="card-body">
 
                     <div class="row">
                         <section class="col-lg-12">
                             <div class="form-group">
-                                <label class="control-label">Status</label>
+                                <label class="form-label">Status</label>
                                 <select class="btn btn-outline-secondary custom-select" ng-model="appSettings.GlobalSettings.DefaultStatus">
                                     <option ng-repeat="item in statuses track by $index" value="{{$index}}">{{item}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">Language</label>
+                                <label class="form-label">Language</label>
                                 <select class="btn btn-outline-secondary custom-select" ng-model="appSettings.GlobalSettings.Language">
                                     <option ng-repeat="item in settings.cultures track by $index" ng-value="item.specificulture">
                                         {{item.fullName}}

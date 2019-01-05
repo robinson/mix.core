@@ -1,29 +1,32 @@
 <div class="card">
-    <h6 class="card-header">
-        Main Content
-    </h6>
+    <div class="card-header">
+            <h3 class="card-title">Main Content</h3>
+    </div>
     <div class="card-body">
-
         <div class="form-group">
-            <label>Title</label>
-            <input type="text" class="form-control form-control-lg" ng-model="$ctrl.page.title" ng-blur="$ctrl.generateSeo()">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" ng-model="$ctrl.page.title" ng-blur="$ctrl.generateSeo()" placeholder="Title..">
+            <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label>PageSize</label>
-            <input type="number" class="form-control form-control-lg" ng-model="$ctrl.page.pageSize">
+            <label class="form-label">PageSize</label>
+            <input type="number" class="form-control" ng-model="$ctrl.page.pageSize" placeholder="PageSize..">
+            <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label>Excerpt</label>
-            <textarea class="form-control form-control-lg" ng-model="$ctrl.page.excerpt">{{$ctrl.page.excerpt}}</textarea>
+            <label class="form-label">Excerpt <span class="form-label-small">0/100</span></label>
+            <div class="invalid-feedback"></div>
+            <textarea class="form-control" ng-model="$ctrl.page.excerpt" placeholder="Excerpt..">{{$ctrl.page.excerpt}}</textarea>            
         </div>
         <div class="form-group">
-            <label>Body content</label>
+            <label class="form-label">Body content</label>
+            <div class="invalid-feedback"></div>
             <trumbowyg options="{}" ng-model="$ctrl.page.content"></trumbowyg>
         </div>
         <div class="form-group">
-            <label class="control-label">Page types</label>
+            <label class="form-label">Page types</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-toggle="buttons">
-                <label ng-repeat="type in $ctrl.settings.pageTypes track by $index" ng-switch="type" ng-class="{active: $index === $ctrl.page.type}" class="btn btn-outline-primary btn-block mt-0" ng-click="$ctrl.page.type=$index;">
+                <label ng-repeat="type in $ctrl.settings.pageTypes track by $index" ng-switch="type" ng-class="{active: $index === $ctrl.page.type}" class="btn pt-2 btn-outline-primary btn-block mt-0" ng-click="$ctrl.page.type=$index;">
                     <input ng-model="$ctrl.page.type" type="radio" value="{{$index}}" class="custom-control-input" id="page_type_{{$index}}">
                     <i ng-switch-when="Blank" class="mi mi-Preview mi-lg mi-fw" title="{{type}}"></i>
                     <i ng-switch-when="Article" class="mi mi-ReadingList mi-lg" title="{{type}}"></i>
