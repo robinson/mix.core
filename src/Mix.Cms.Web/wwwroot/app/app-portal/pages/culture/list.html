@@ -92,8 +92,8 @@
 </section> -->
 
 <div class="card">
-        <div class="row card-header">
-                <div class="col-md-1">
+        <div class="card-header">
+                <!-- <div class="col-md-1">
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                 <a href="/portal/culture/create" class="btn btn-secondary btn-sm">
@@ -101,11 +101,15 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-11">
-                
+                    </div> -->
+               
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <a href="/portal/culture/create" class="btn btn-secondary">
+                                        <em class="fas fa-plus"></em>
+                                    </a>
+                                </div>
                         <filter-list request="request" callback="getList(pageIndex)"></filter-list>
-                    </div>
+                    
         </div>
         <div class="table-responsive">
           <table class="table card-table table-vcenter text-nowrap sortable table-sm table-hover" id="list-page" cellspacing="0" ng-init="getList()">
