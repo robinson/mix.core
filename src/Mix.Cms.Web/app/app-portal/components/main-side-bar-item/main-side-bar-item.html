@@ -13,13 +13,13 @@
             <i class="{{$ctrl.item.icon}} mi-lg mi-fw"></i>
             <a href="{{$ctrl.item.href}}" class="text" ng-bind-html="$ctrl.translate($ctrl.item.title,true)"></a>
         </div> 
-        <ul ng-if="$ctrl.item.subMenus.length>0" id="{{$ctrl.item.title}}" class="list-unstyled" role="tabpanel" data-parent="#sw-docs-nav">
+        <!-- <ul ng-if="$ctrl.item.subMenus.length>0" id="{{$ctrl.item.title}}" class="list-unstyled" role="tabpanel" data-parent="#sw-docs-nav">
             <li ng-repeat="m in $ctrl.item.subMenus">
                 <a href="{{m.href}}" class="sw-toc-sub-link mb-1">
                     <i class="{{m.icon}} mi-fw"></i>
                     <span class="text" ng-bind="$ctrl.translate(m.title)"></span>
                 </a>
             </li>
-        </ul>
+        </ul> -->
     </div>
     

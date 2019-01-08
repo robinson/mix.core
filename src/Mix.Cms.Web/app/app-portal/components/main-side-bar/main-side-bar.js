@@ -15,7 +15,7 @@
                     title: 'portal_articles',
                     shortTitle: ('portal_articles'),
                     icon: 'mi mi-ReadingList',
-                    href: '#',
+                    href: '/portal/article/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -69,7 +69,7 @@
                     title: 'portal_pages',
                     shortTitle: 'portal_pages',
                     icon: 'mi mi-Page',
-                    href: '#',
+                    href: '/portal/page/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -87,7 +87,7 @@
                     title: 'portal_modules',
                     shortTitle: 'portal_modules',
                     icon: 'mi mi-ResolutionLegacy',
-                    href: '#',
+                    href: '/portal/module/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -105,7 +105,7 @@
                     title: 'portal_themes',
                     shortTitle: 'portal_themes',
                     icon: 'mi mi-Personalize',
-                    href: '#',
+                    href: '/portal/theme/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -123,7 +123,7 @@
                     title: 'portal_media',
                     shortTitle: 'Media',
                     icon: 'mi mi-Photo2',
-                    href: '#',
+                    href: '/portal/media/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -141,7 +141,7 @@
                     title: 'portal_file',
                     shortTitle: 'File',
                     icon: 'mi mi-FileExplorer',
-                    href: '#',
+                    href: '/portal/file/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -159,7 +159,7 @@
                     title: 'portal_users',
                     shortTitle: 'Users',
                     icon: 'mi mi-Contact',
-                    href: '#',
+                    href: '/portal/user/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -182,7 +182,7 @@
                     title: 'portal_settings',
                     shortTitle: 'Settings',
                     icon: 'mi mi-Settings mi-spin',
-                    href: '#',
+                    href: '/portal/configuration/list',
                     subMenus: [
                         {
                             title: 'portal_app_settings',
@@ -212,7 +212,7 @@
                     title: 'language',
                     shortTitle: 'Language',
                     icon: 'mi mi-TimeLanguage',
-                    href: '#',
+                    href: '/portal/language/list',
                     subMenus: [
                         {
                             title: 'portal_create',
@@ -230,7 +230,7 @@
                     title: 'portal_cultures',
                     shortTitle: 'portal_short_cultures',
                     icon: 'mi mi-Globe mi-spin',
-                    href: '#',
+                    href: '/portal/culture/list',
                     subMenus: [
                         {
                             title: ('portal_create'),
@@ -248,7 +248,7 @@
                     title: 'portal_permissions',
                     shortTitle: 'portal_short_portal_permissions',
                     icon: 'mi mi-LockscreenDesktop',
-                    href: '#',
+                    href: '/portal/permission/list',
                     subMenus: [
                         {
                             title: ('portal_create'),

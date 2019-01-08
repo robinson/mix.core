@@ -1,4 +1,76 @@
 <div ng-if="!$ctrl.canDrag">
+        <span class="text-warning" ng-bind="$ctrl.translate('warning_can_not_drag_drop',true, '(**Drag Drop only allow when order by priority asc)')"></span>
+    </div>
+    <table class="table tbDragable card-table table-vcenter text-nowrap sortable table-sm table-hover data-table" ng-if="$ctrl.data.items" ng-init="$ctrl.init()">
+        <thead> 
+            <tr class="row">
+                <th class="w-1 col-1"><span class="fas fa-sort"></span></th>
+                <th scope="col" class="col-sm-1"><span class="fas fa-sort-numeric-down"></span></th>
+                <th scope="col" class="col-sm-{{$ctrl.colWidth}}" ng-repeat="col in $ctrl.columns track by $index">
+                    <span ng-bind="col.title"></span>
+                </th>
+                <th scope="col" class="col-sm-{{$ctrl.lastColWidth}}">Actions</th>
+            </tr>
+        </thead>
+        <tbody dnd-list="$ctrl.data.items" id="list-page" class="nav" ng-if="$ctrl.data.items.length" dnd-inserted="$ctrl.insertCallback(index, item, external, type)" dnd-disable-if="!$ctrl.canDrag">
+                <tr class="row col-sm-12 dndPlaceholder"></tr>
+                        <tr ng-repeat="nav in $ctrl.data.items" class="row col-sm-12 dnd-item" dnd-draggable="nav" dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)" dnd-effect-allowed="move" dnd-selected="$ctrl.selected = nav" ng-class="{'selected': $ctrl.selected === nav}">
+                             <td class="col-1 drag-header">
+                                    <span class="fas fa-sort"></span>
+                            </td>
+            
+                            <td class="col-sm-1">
+                                    <input style="width:40px" type="number" readonly="readonly" ng-model="nav.priority" class="item-priority form-control form-control-sm d-inline">
+                            </td>
+                            <td class="col-sm-{{$ctrl.colWidth}}" ng-repeat="col in $ctrl.columns track by $index">
+                                    <mix-data-preview type="col.type" value="nav[col.name]" width="50"></mix-data-preview>
+                            </td>
+                            <td class="col-sm-{{$ctrl.lastColWidth}}">
+                                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="Actions">
+                                    <a ng-if="nav.childNavs.length > 0" class="btn btn-light" ng-click="$ctrl.toggleChildNavs(nav)">
+                                        <span class="fas fa-list text-primary"></span>
+                                    </a>
+                                    <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(nav.id)" class="btn btn-sm btn-light">
+                                        <span class="fas fa-pencil-alt text-primary"></span>
+                                    </a>
+                                    <a ng-click="$ctrl.delete(nav.id);" class="btn btn-light del-popover" data-toggle="popover" data-html="true">
+                                        <span class="fas fa-times text-danger"></span>
+                                    </a>                                   
+                                </div>
+                            </td>  
+                            
+                            <td ng-show="nav.showChildNavs" dnd-list="nav.childNavs" class="col-sm-12 nav" dnd-disable-if="!$ctrl.canDrag">
+                                    <!-- <div class="row col-sm-12 dndPlaceholder"></div> -->
+                                    <div ng-repeat="snav in nav.childNavs" class="row col-sm-12 dnd-item" dnd-draggable="snav" dnd-moved="$ctrl.updateChildOrders($index,nav.childNavs)" dnd-effect-allowed="move" dnd-selected="$ctrl.selected = snav">
+                                        
+                                            <div class="col-1">
+                                                <span class="fas fa-sort"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input type="number" readonly="readonly" ng-model="snav.priority" class="item-priority form-control form-control-sm d-inline">
+                                            </div>
+                                            <div class="col-sm-{{$ctrl.colWidth}}" ng-repeat="col in $ctrl.columns">
+                                                <mix-data-preview type="col.type" value="snav.page[col.name]" width="50"></mix-data-preview>
+                                            </div>
+                                            <div class="col-sm-{{$ctrl.lastColWidth}}">
+                                                <div class="btn-group btn-group-sm float-right" role="group" aria-label="Actions">
+                                                    <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(snav.id)" class="btn btn-sm btn-light">
+                                                        <span class="fas fa-pencil-alt text-primary"></span>
+                                                    </a>
+                                                    <a ng-click="$ctrl.delete(snav.id);" class="btn btn-light del-popover" data-toggle="popover" data-html="true">
+                                                        <span class="fas fa-times text-danger"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                      
+                                    </div>
+                                </td>                      
+                    </tr>                                             
+        </tbody>  
+    </table>
+
+
+<!-- <div ng-if="!$ctrl.canDrag">
     <span class="text-warning" ng-bind="$ctrl.translate('warning_can_not_drag_drop',true, '(**Drag Drop only allow when order by priority asc)')"></span>
 </div>
 <div class="data-table" ng-if="$ctrl.data.items" ng-init="$ctrl.init()">
@@ -21,22 +93,29 @@
             </div>
         </div>
     </div>
-    <div dnd-list="$ctrl.data.items" id="list-page" class="nav" ng-if="$ctrl.data.items.length" dnd-inserted="$ctrl.insertCallback(index, item, external, type)" dnd-disable-if="!$ctrl.canDrag">
+    <div dnd-list="$ctrl.data.items" id="list-page" class="nav" ng-if="$ctrl.data.items.length" dnd-inserted="$ctrl.insertCallback(index, item, external, type)"
+        dnd-disable-if="!$ctrl.canDrag">
         <div class="col-sm-12 dndPlaceholder"></div>
-        <div ng-repeat="nav in $ctrl.data.items" class="col-sm-12 dnd-item" dnd-draggable="nav" dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)" dnd-effect-allowed="move" dnd-selected="$ctrl.selected = nav" ng-class="{'selected': $ctrl.selected === nav}">
+        <div ng-repeat="nav in $ctrl.data.items" class="col-sm-12 dnd-item" 
+            dnd-draggable="nav" dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)"
+            dnd-effect-allowed="move" dnd-selected="$ctrl.selected = nav" 
+            ng-class="{'selected': $ctrl.selected === nav}">
             <div class="row">
                 <div class="col-1 drag-header" style="cursor:move;">
                     <span class="fas fa-sort"></span>
                 </div>
                 <div class="col-sm-1">
-                    <input style="width:40px" type="number" readonly="readonly" ng-model="nav.priority" class="item-priority form-control form-control-sm d-inline">
+                    <input style="width:40px" type="number" readonly="readonly" ng-model="nav.priority" 
+                    class="item-priority form-control form-control-sm d-inline">
                 </div>
                 <div class="col-sm-{{$ctrl.colWidth}}" ng-repeat="col in $ctrl.columns track by $index">
                     <mix-data-preview type="col.type" value="nav[col.name]" width="50"></mix-data-preview>
                 </div>
                 <div class="col-sm-{{$ctrl.lastColWidth}}">
-                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="Actions">
-                        <a ng-if="nav.childNavs.length > 0" class="btn btn-light" ng-click="$ctrl.toggleChildNavs(nav)">
+                    <div class="btn-group btn-group-sm float-right" role="group" 
+                        aria-label="Actions">
+                        <a ng-if="nav.childNavs.length > 0" class="btn btn-light" 
+                            ng-click="$ctrl.toggleChildNavs(nav)">
                             <span class="oi oi-list text-primary"></span>
                         </a>
                         <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(nav.id)" class="btn btn-sm btn-light">
@@ -48,10 +127,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Childs -->
+            
             <div ng-show="nav.showChildNavs" dnd-list="nav.childNavs" class="nav" dnd-disable-if="!$ctrl.canDrag">
                 <div class="col-sm-12 dndPlaceholder"></div>
-                <div ng-repeat="snav in nav.childNavs" class="col-sm-12 dnd-item" dnd-draggable="snav" dnd-moved="$ctrl.updateChildOrders($index,nav.childNavs)" dnd-effect-allowed="move" dnd-selected="$ctrl.selected = snav">
+                <div ng-repeat="snav in nav.childNavs" class="col-sm-12 dnd-item" dnd-draggable="snav" dnd-moved="$ctrl.updateChildOrders($index,nav.childNavs)"
+                    dnd-effect-allowed="move" dnd-selected="$ctrl.selected = snav">
                     <div class="row">
                         <div class="col-1 drag-header" style="cursor:move;">
                             <span class="fas fa-sort"></span>
@@ -75,7 +155,7 @@
                     </div>
                 </div>
             </div>
-            <!-- End Childs -->
+
         </div>
     </div>
-</div>
+</div> -->

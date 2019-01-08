@@ -23,7 +23,7 @@
                                 <input type="hidden" asp-for="Id">
                                 <input type="hidden" asp-for="Specificulture">
                                 <input type="hidden" asp-for="Priority">
-                                <table class="table table-sm" id="Table">
+                                <table class="table tbDragable table-sm" id="Table">
                                     <thead class="thead-light">
                                         <tr>
                                             <!--<th scope="col" width="5%">
@@ -44,7 +44,7 @@
                                             <th scope="col" width="5%"></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="sortable" dnd-list="activedData.columns" dnd-inserted="insertColCallback(index, item, external, type)">
+                                    <tbody class="sortable" style="display: table-row-group;" dnd-list="activedData.columns" dnd-inserted="insertColCallback(index, item, external, type)">
                                         <tr class="sortable-item module-column" ng-repeat="col in activedData.columns track by $index" dnd-draggable="col" dnd-dragstart="updateColOrders($index,activedData.columns)" dnd-effect-allowed="move" dnd-selected="selectedCol = col" ng-class="{'selected': selectedCol === col}">
                                             <td style="cursor:move;" class="drag-header">
                                                 <span class="fas fa-sort"></span>

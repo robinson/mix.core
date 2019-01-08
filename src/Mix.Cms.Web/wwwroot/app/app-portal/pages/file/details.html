@@ -1,5 +1,6 @@
 <!-- Main content -->
-<section class="" ng-init="loadFile()">
+<section class="card" ng-init="loadFile()">
+    <div class="card-body">
     <form ng-if="activedFile" ng-class="{'submitted': submitted}" ng-submit="saveFile(activedFile)">
         <actions back-url="listUrl"></actions>
         <div class="row">
@@ -18,5 +19,6 @@
             </section>
         </div>
     </form>
+</div>
 </section>
 <!-- /.content -->

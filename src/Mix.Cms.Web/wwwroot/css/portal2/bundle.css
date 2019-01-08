@@ -11138,6 +11138,46 @@ Icon input
 .bg-white {
   background-color: white; }
 
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+table .tbDragable {
+  /**
+ * The dndDraggingSource class will be applied to
+ * the source element of a drag operation. It makes
+ * sense to hide it to give the user the feeling
+ * that he's actually moving it.
+ */
+  /**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+  /**
+ * Show selected elements in green
+ */ }
+  table .tbDragabletbody[dnd-list], table .tbDragable ul[dnd-list], table .tbDragable div[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px; }
+  table .tbDragabletbody[dnd-list] .dndDraggingSource, table .tbDragable ul[dnd-list] .dndDraggingSource, table .tbDragable div[dnd-list] .dndDraggingSource {
+    display: none; }
+  table .tbDragabletbody[dnd-list] .dndPlaceholder, table .tbDragable ul[dnd-list] .dndPlaceholder, table .tbDragable div[dnd-list] .dndPlaceholder {
+    background-color: #ddd;
+    display: block;
+    min-height: 42px; }
+  table .tbDragable ul[dnd-list] li, table .tbDragable tbody[dnd-list], table .tbDragable div[dnd-list] .dnd-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px; }
+  table .tbDragable ul[dnd-list] li.selected, table .tbDragable tbody[dnd-list], table .tbDragable div[dnd-list] .dnd-item.selected {
+    background-color: unset !important;
+    color: black !important; }
+
 .custom-range {
   align-items: center;
   -webkit-appearance: none;
