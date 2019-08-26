@@ -59,19 +59,19 @@ steps:
     filePatterns: 'app_offline.htm'
     remoteDirectory: '/demo'
 
-- task: FtpUpload@1
-  inputs:
-    credentialsOption: 'inputs'
-    serverUrl: $(ftp_url)
-    username: $(ftp_username)
-    password: $(ftp_pass)
-    rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
-    remoteDirectory: '/demo'
-    # filePatterns: '!appsettings.json'
-    cleanContents: false
-    overwrite: true
-    preservePaths: true
-    # clean: false
-    # cleanContents: false
-    # preservePaths: false
-    # trustSSL: false
+# - task: FtpUpload@1
+#   inputs:
+#     credentialsOption: 'inputs'
+#     serverUrl: $(ftp_url)
+#     username: $(ftp_username)
+#     password: $(ftp_pass)
+#     rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
+#     remoteDirectory: '/demo'
+#     # filePatterns: '!appsettings.json'
+#     cleanContents: false
+#     overwrite: true
+#     preservePaths: true
+#     # clean: false
+#     # cleanContents: false
+#     # preservePaths: false
+#     # trustSSL: false
