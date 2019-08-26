@@ -59,7 +59,7 @@ steps:
     filePatterns: 'app_offline.htm'
     remoteDirectory: '/demo'
 
-- task: FtpUpload@2
+- task: FtpUpload@1
   inputs:
     credentialsOption: 'inputs'
     serverUrl: $(ftp_url)
