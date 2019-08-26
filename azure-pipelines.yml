@@ -67,7 +67,10 @@ steps:
     password: $(ftp_pass)
     rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
     remoteDirectory: '/demo'
-    clean: false
-    cleanContents: false
-    preservePaths: false
-    trustSSL: false
+    cleanContents: true
+    overwrite: true
+    preservePaths: true
+    # clean: false
+    # cleanContents: false
+    # preservePaths: false
+    # trustSSL: false
