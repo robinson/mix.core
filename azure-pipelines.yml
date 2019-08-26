@@ -15,39 +15,38 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# - task: NuGetToolInstaller@1
-# - bash: git clone --depth=50 --branch=master https://github.com/mixcore/mix.heart.git d:/a/1/mix.heart
-# - bash: git clone --depth=50 --branch=master https://github.com/mixcore/mix.identity.git d:/a/1/mix.identity
+- task: NuGetToolInstaller@1
+- bash: git clone --depth=50 --branch=master https://github.com/mixcore/mix.heart.git d:/a/1/mix.heart
+- bash: git clone --depth=50 --branch=master https://github.com/mixcore/mix.identity.git d:/a/1/mix.identity
 
-# - task: UseNode@1
+- task: UseNode@1
 
-# - task: CmdLine@2
-#   inputs:
-#     script: 'npm install'
-#     workingDirectory: 'd:\a\1\s\src\portal-app\'
+- task: CmdLine@2
+  inputs:
+    script: 'npm install'
+    workingDirectory: 'd:\a\1\s\src\portal-app\'
 
-# - task: Gulp@1
-#   inputs:
-#     gulpFile: 'd:\a\1\s\src\portal-app\gulpfile.js'
-#     targets: 'build'
-#     enableCodeCoverage: false
+- task: Gulp@1
+  inputs:
+    gulpFile: 'd:\a\1\s\src\portal-app\gulpfile.js'
+    targets: 'build'
+    enableCodeCoverage: false
 
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 
 # - task: FtpUpload@1
@@ -74,16 +73,16 @@ steps:
 #     trustSSL: false
 
 
-- task: FtpUpload@2
-  inputs:
-    credentialsOption: 'inputs'
-    serverUrl: $(ftp_url)
-    username: $(ftp_username)
-    password: $(ftp_pass)
-    rootDirectory: 'd:\a\1\s'
-    remoteDirectory: '/demo'
-    filePatterns: '!default.appsettings.json'
-    clean: true
-    cleanContents: true
-    preservePaths: true
-    trustSSL: false
+# - task: FtpUpload@2
+#   inputs:
+#     credentialsOption: 'inputs'
+#     serverUrl: $(ftp_url)
+#     username: $(ftp_username)
+#     password: $(ftp_pass)
+#     rootDirectory: 'd:\a\1\s'
+#     remoteDirectory: '/demo'
+#     filePatterns: '!default.appsettings.json'
+#     clean: true
+#     cleanContents: true
+#     preservePaths: true
+#     trustSSL: false
