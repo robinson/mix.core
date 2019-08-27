@@ -36,6 +36,18 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      ((Get-Content -path appsettings.json -Raw) -replace '$SER_IP$','$env:DEMO_SER_IP') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBNAME$','$env:DEMO_DBNAME') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBUID$','$env:DEMO_DBUID') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBPWD$','$env:DEMO_DBPWD') | Set-Content -Path appsettings.json
+    errorActionPreference: 'silentlyContinue'
+    workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -63,17 +75,6 @@ steps:
   inputs:
     SourceFolder: 'd:\a\1\s\'
     Contents: 'app_offline.htm'
-
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      ((Get-Content -path appsettings.json -Raw) -replace '$SER_IP$','$env:DEMO_SER_IP') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBNAME$','$env:DEMO_DBNAME') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBUID$','$env:DEMO_DBUID') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBPWD$','$env:DEMO_DBPWD') | Set-Content -Path appsettings.json
-    errorActionPreference: 'silentlyContinue'
-    workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
 
 - task: FtpUpload@1
   inputs:
