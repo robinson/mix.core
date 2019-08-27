@@ -75,7 +75,6 @@ steps:
     filePatterns: |
       *.js
       *.html
-      *.htm
       *.cshtml
       *.css
       *.dll
