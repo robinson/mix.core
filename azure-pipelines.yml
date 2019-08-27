@@ -80,7 +80,7 @@ steps:
       */**/*.css
       */**/*.dll
       */**/*.json
-    cleanContents: true
+    cleanContents: false
     overwrite: true
     preservePaths: true
     # clean: false
