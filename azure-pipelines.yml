@@ -64,6 +64,17 @@ steps:
     SourceFolder: 'd:\a\1\s\'
     Contents: 'app_offline.htm'
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      ((Get-Content -path appsettings.json -Raw) -replace '$SER_IP$','white') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBNAME$','white') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBUID$','white') | Set-Content -Path appsettings.json
+      ((Get-Content -path appsettings.json -Raw) -replace '$DBPWD$','white') | Set-Content -Path appsettings.json
+    errorActionPreference: 'silentlyContinue'
+    workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
+
 - task: FtpUpload@1
   inputs:
     credentialsOption: 'inputs'
