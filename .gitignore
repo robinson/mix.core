@@ -237,7 +237,7 @@ ModelManifest.xml
 .fake/
 
 # Source
-src/Mix.Cms.Web/appsettings.json
+# src/Mix.Cms.Web/appsettings.json
 src/Mix.Cms.Web/mixCmsSettings.json
 src/Mix.Cms.Web/wwwroot/content/*
 src/Mix.Cms.Web/wwwroot/Exports/*
