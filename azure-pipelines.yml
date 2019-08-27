@@ -84,12 +84,6 @@ steps:
     rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
     remoteDirectory: '/demo'
     filePatterns: |
-      */**/*.js
-      */**/*.html
-      */**/*.htm
-      */**/*.cshtml
-      */**/*.css
-      */**/*.dll
       */**/*.json
     cleanContents: false
     overwrite: true
@@ -98,3 +92,10 @@ steps:
     # cleanContents: false
     # preservePaths: false
     # trustSSL: false
+
+      # */**/*.js
+      # */**/*.html
+      # */**/*.htm
+      # */**/*.cshtml
+      # */**/*.css
+      # */**/*.dll
