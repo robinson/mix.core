@@ -41,12 +41,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ((Get-Content -path appsettings.json -Raw) -replace '$SER_IP$','$env:DEMO_SER_IP') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBNAME$','$env:DEMO_DBNAME') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBUID$','$env:DEMO_DBUID') | Set-Content -Path appsettings.json
-      ((Get-Content -path appsettings.json -Raw) -replace '$DBPWD$','$env:DEMO_DBPWD') | Set-Content -Path appsettings.json
-    errorActionPreference: 'silentlyContinue'
-    workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\'
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\appsettings.json -Raw) -replace '$SER_IP$','$env:DEMO_SER_IP') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\appsettings.json -Raw) -replace '$DBNAME$','$env:DEMO_DBNAME') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\appsettings.json -Raw) -replace '$DBUID$','$env:DEMO_DBUID') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\appsettings.json -Raw) -replace '$DBPWD$','$env:DEMO_DBPWD') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\appsettings.json
+    #errorActionPreference: 'silentlyContinue'
+    #workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\'
 
 - task: VSBuild@1
   inputs:
@@ -85,7 +85,7 @@ steps:
     rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
     remoteDirectory: '/demo'
     filePatterns: |
-      */**/*.json
+      *.json
     cleanContents: true
     overwrite: true
     preservePaths: true
