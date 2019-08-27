@@ -49,10 +49,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$SER_IP$','$env:DEMO_SER_IP') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBNAME$','$env:DEMO_DBNAME') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBUID$','$env:DEMO_DBUID') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBPWD$','$env:DEMO_DBPWD') | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$SER_IP$', $env:DEMO_SER_IP) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBNAME$', $env:DEMO_DBNAME) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBUID$', $env:DEMO_DBUID) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBPWD$', $env:DEMO_DBPWD) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
     #errorActionPreference: 'silentlyContinue'
     #workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\'
 
