@@ -75,11 +75,12 @@ steps:
     filePatterns: |
       *.js
       *.html
+      *.htm
       *.cshtml
       *.css
       *.dll
       *.json
-    cleanContents: false
+    cleanContents: true
     overwrite: true
     preservePaths: true
     # clean: false
