@@ -58,56 +58,55 @@ steps:
       (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$DBUID\`$", $env:DEMO_DBUID | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
       (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$DBPWD\`$", $env:DEMO_DBPWD | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
       (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json)
-    # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$SER_IP$', $env:DEMO_SER_IP) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-    # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBNAME$', $env:DEMO_DBNAME) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-    # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBUID$', $env:DEMO_DBUID) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-    # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBPWD$', $env:DEMO_DBPWD) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-    #errorActionPreference: 'silentlyContinue'
-    #workingDirectory: 'd:\a\1\s\src\Mix.Cms.Web\'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
-
-
-# - task: FtpUpload@1
-#   inputs:
-#     credentialsOption: 'inputs'
-#     serverUrl: $(ftp_url)
-#     username: $(ftp_username)
-#     password: $(ftp_pass)
-#     rootDirectory: 'd:\a\1\s\'
-#     filePatterns: 'app_offline.htm'
-#     remoteDirectory: '/demo'
+- task: FtpUpload@1
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: $(ftp_url)
+    username: $(ftp_username)
+    password: $(ftp_pass)
+    rootDirectory: 'd:\a\1\s\'
+    filePatterns: 'app_offline.htm'
+    remoteDirectory: '/demo'
 
 # - task: DeleteFiles@1
 #   inputs:
 #     SourceFolder: 'd:\a\1\s\'
 #     Contents: 'app_offline.htm'
 
-# - task: FtpUpload@1
-#   inputs:
-#     credentialsOption: 'inputs'
-#     serverUrl: $(ftp_url)
-#     username: $(ftp_username)
-#     password: $(ftp_pass)
-#     rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
-#     remoteDirectory: '/demo'
-#     filePatterns: |
-#       *.json
-#     cleanContents: true
-#     overwrite: true
-#     preservePaths: true
-#     # clean: false
-#     # cleanContents: false
-#     # preservePaths: false
-#     # trustSSL: false
+- task: FtpUpload@1
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: $(ftp_url)
+    username: $(ftp_username)
+    password: $(ftp_pass)
+    rootDirectory: 'd:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\'
+    remoteDirectory: '/demo'
+    # filePatterns: |
+    #   */**/*.json
+    #   */**/*.js
+    #   */**/*.html
+    #   */**/*.htm
+    #   */**/*.cshtml
+    #   */**/*.css
+    #   */**/*.dll
+    cleanContents: true
+    overwrite: true
+    preservePaths: true
+    # clean: false
+    # cleanContents: false
+    # preservePaths: false
+    # trustSSL: false
 
-#       # */**/*.js
-#       # */**/*.html
-#       # */**/*.htm
-#       # */**/*.cshtml
-#       # */**/*.css
-#       # */**/*.dll
+      # */**/*.js
+      # */**/*.html
+      # */**/*.htm
+      # */**/*.cshtml
+      # */**/*.css
+      # */**/*.dll
