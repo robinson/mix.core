@@ -53,10 +53,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\$SER_IP\$", $env:DEMO_SER_IP | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\$DBNAME\$", $env:DEMO_DBNAME | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\$DBUID\$", $env:DEMO_DBUID | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
-      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\$DBPWD\$", $env:DEMO_DBPWD | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$SER_IP\`$", $env:DEMO_SER_IP | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$DBNAME\`$", $env:DEMO_DBNAME | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$DBUID\`$", $env:DEMO_DBUID | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
+      (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json) -replace "\`$DBPWD\`$", $env:DEMO_DBPWD | Set-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
       (Get-Content d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json)
     # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$SER_IP$', $env:DEMO_SER_IP) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
     # ((Get-Content -path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json -Raw) -replace '$DBNAME$', $env:DEMO_DBNAME) | Set-Content -Path d:\a\1\s\src\Mix.Cms.Web\obj\Release\netcoreapp2.2\PubTmp\Out\appsettings.json
