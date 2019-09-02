@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- ci-cd
 
 pool:
   vmImage: 'windows-latest'
