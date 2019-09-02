@@ -6,6 +6,8 @@
 trigger:
 - master
 - ci-cd
+- releases/*
+- developer
 
 pool:
   vmImage: 'windows-latest'
