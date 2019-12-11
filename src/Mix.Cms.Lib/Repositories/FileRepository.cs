@@ -1,9 +1,9 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the GNU General Public License v3.0 license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the GNU General Public License v3.0 license.
 // See the LICENSE file in the project root for more information.
 
-// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the GNU General Public License v3.0.
+// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the GNU General Public License v3.0.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Http;
@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
 
 namespace Mix.Cms.Lib.Repositories
@@ -228,9 +227,9 @@ namespace Mix.Cms.Lib.Repositories
         public FileViewModel GetFile(string fullname, string FileFolder, bool isCreate = false, string defaultContent = "")
         {
             var arr = fullname.Split('.');
-            if (arr.Length == 2)
+            if (arr.Length >= 2)
             {
-                return GetFile(arr[0], $".{arr[1]}", FileFolder, isCreate, defaultContent);
+                return GetFile(fullname.Substring(0,fullname.LastIndexOf('.')), $".{arr[arr.Length-1]}", FileFolder, isCreate, defaultContent);
             }
             else
             {
@@ -365,15 +364,10 @@ namespace Mix.Cms.Lib.Repositories
 
         public List<string> GetTopDirectories(string folder)
         {
-            string fullPath = CommonHelper.GetFullPath(new string[]
-            {
-                MixConstants.Folder.WebRootPath,
-                folder
-            });
             List<string> result = new List<string>();
-            if (Directory.Exists(fullPath))
+            if (Directory.Exists(folder))
             {
-                foreach (string dirPath in Directory.GetDirectories(fullPath, "*",
+                foreach (string dirPath in Directory.GetDirectories(folder, "*",
                     SearchOption.TopDirectoryOnly))
                 {
                     DirectoryInfo path = new DirectoryInfo(dirPath);
@@ -385,22 +379,10 @@ namespace Mix.Cms.Lib.Repositories
 
         public List<FileViewModel> GetTopFiles(string folder)
         {
-            string fullPath = CommonHelper.GetFullPath(new string[]
-             {
-                MixConstants.Folder.WebRootPath,
-                //MixConstants.Folder.FileFolder,
-                folder
-             });
-
-            string webPath = CommonHelper.GetFullPath(new string[]
-             {
-                //MixConstants.Folder.FileFolder,
-                folder
-             });
             List<FileViewModel> result = new List<FileViewModel>();
-            if (Directory.Exists(fullPath))
+            if (Directory.Exists(folder))
             {
-                DirectoryInfo path = new DirectoryInfo(fullPath);
+                DirectoryInfo path = new DirectoryInfo(folder);
                 string folderName = path.Name;
 
                 var Files = path.GetFiles();
@@ -409,7 +391,7 @@ namespace Mix.Cms.Lib.Repositories
                     result.Add(new FileViewModel()
                     {
                         FolderName = folderName,
-                        FileFolder = webPath,
+                        FileFolder = folder,
 
                         Filename = file.Name.Substring(0, file.Name.LastIndexOf('.') >= 0 ? file.Name.LastIndexOf('.') : 0),
                         Extension = file.Extension,
@@ -547,7 +529,7 @@ namespace Mix.Cms.Lib.Repositories
                     }
                     else
                     {
-                        string base64 = file.FileStream.Split(',')[1];
+                        string base64 = file.FileStream.IndexOf(',') >= 0 ?  file.FileStream.Split(',')[1] : file.FileStream;
 
                         if (!string.IsNullOrEmpty(ImageResizer.getContentType(fileName)))
                         {

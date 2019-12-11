@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +12,11 @@ using Mix.Domain.Core.ViewModels;
 using Mix.Identity.Models;
 using Mix.Identity.Models.AccountViewModels;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using static Mix.Cms.Lib.MixEnums;
 
 namespace Mix.Cms.Api.Controllers.v1
@@ -64,7 +64,7 @@ namespace Mix.Cms.Api.Controllers.v1
         [HttpPost, HttpOptions]
         [AllowAnonymous]
         //[ValidateAntiForgeryToken]
-        public async Task<RepositoryResponse<AccessTokenViewModel>> Login([FromBody] LoginViewModel model)
+        public async Task<ActionResult<RepositoryResponse<AccessTokenViewModel>>> Login([FromBody] LoginViewModel model)
         {
             RepositoryResponse<AccessTokenViewModel> loginResult = new RepositoryResponse<AccessTokenViewModel>();
             if (ModelState.IsValid)
@@ -91,22 +91,22 @@ namespace Mix.Cms.Api.Controllers.v1
                         loginResult.Status = 1;
                         loginResult.Data = token;
                         _logger.LogInformation("User logged in.");
-                        return loginResult;
+                        return Ok(loginResult);
                     }
                     else
                     {
-                        return loginResult;
+                        return Ok(loginResult);
                     }
                 }
                 else
                 {
                     loginResult.Errors.Add("login failed");
-                    return loginResult;
+                    return BadRequest(loginResult);
                 }
             }
             else
             {
-                return loginResult;
+                return BadRequest(loginResult);
             }
         }
 
@@ -166,7 +166,7 @@ namespace Mix.Cms.Api.Controllers.v1
         [Route("Register")]
         [HttpPost, HttpOptions]
         [AllowAnonymous]
-        public async Task<RepositoryResponse<AccessTokenViewModel>> Register([FromBody] MixRegisterViewModel model)
+        public async Task<ActionResult<RepositoryResponse<AccessTokenViewModel>>> Register([FromBody] MixRegisterViewModel model)
         {
             RepositoryResponse<AccessTokenViewModel> result = new RepositoryResponse<AccessTokenViewModel>();
             if (ModelState.IsValid)
@@ -180,16 +180,15 @@ namespace Mix.Cms.Api.Controllers.v1
                     Avatar = model.Avatar ?? MixService.GetConfig<string>("DefaultAvatar"),
                     JoinDate = DateTime.UtcNow
                 };
+
                 var createResult = await _userManager.CreateAsync(user, password: model.Password).ConfigureAwait(false);
                 if (createResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     user = await _userManager.FindByEmailAsync(model.Email).ConfigureAwait(false);
                     model.Id = user.Id;
                     model.CreatedDateTime = DateTime.UtcNow;
                     // Save to cms db context
-
                     await model.SaveModelAsync();
                     var token = await _helper.GenerateAccessTokenAsync(user, true);
                     if (token != null)
@@ -201,7 +200,7 @@ namespace Mix.Cms.Api.Controllers.v1
                     }
                     else
                     {
-                        return result;
+                        return Ok(result);
                     }
                 }
                 else
@@ -210,11 +209,11 @@ namespace Mix.Cms.Api.Controllers.v1
                     {
                         result.Errors.Add(error.Description);
                     }
-                    return result;
+                    return BadRequest(result);
                 }
             }
 
-            return result;
+            return BadRequest(result);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
@@ -357,7 +356,7 @@ namespace Mix.Cms.Api.Controllers.v1
                     var user = await _userManager.FindByNameAsync(model.Username);
                     if (user != null)
                     {
-                        var tmp  = await _userManager.ChangePasswordAsync(user, model.ChangePassword.CurrentPassword, model.ChangePassword.NewPassword);
+                        var tmp = await _userManager.ChangePasswordAsync(user, model.ChangePassword.CurrentPassword, model.ChangePassword.NewPassword);
                         result.IsSucceed = tmp.Succeeded;
                         if (!result.IsSucceed)
                         {
@@ -412,7 +411,7 @@ namespace Mix.Cms.Api.Controllers.v1
                 data.Data.Items.ForEach(a =>
                 {
                     a.DetailsUrl = MixCmsHelper.GetRouterUrl(
-                        "Profile", new { a.Id }, Request, Url);
+                        new { action = "profile", a.Id }, Request, Url);
                 }
                 );
             }
@@ -507,6 +506,6 @@ namespace Mix.Cms.Api.Controllers.v1
             return result;
         }
 
-        
+
     }
 }

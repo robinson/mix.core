@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Hubs\MixChatHub.cs" />
+    <Compile Remove="Helpers\AesEncryptionHelper.cs" />
+    <Compile Remove="Helpers\RSAEncryptionHelper.cs" />
     <Compile Remove="Interfaces\IMixCmsService.cs" />
     <Compile Remove="Migrations\20181103045052_init-all.cs" />
     <Compile Remove="Migrations\20181103045052_init-all.Designer.cs" />
@@ -29,19 +30,25 @@
     <Compile Remove="Migrations\20190523082752_add-attr.Designer.cs" />
     <Compile Remove="Migrations\20190523083122_update-maytisa.cs" />
     <Compile Remove="Migrations\20190523083122_update-maytisa.Designer.cs" />
+    <Compile Remove="Migrations\20190912014738_add_attr_name_to_data.cs" />
+    <Compile Remove="Migrations\20190912014738_add_attr_name_to_data.Designer.cs" />
+    <Compile Remove="Migrations\20190913152757_upd_related_attr_set.cs" />
+    <Compile Remove="Migrations\20190913152757_upd_related_attr_set.Designer.cs" />
+    <Compile Remove="Migrations\20190914091248_upd_attr_set_data.cs" />
+    <Compile Remove="Migrations\20190914091248_upd_attr_set_data.Designer.cs" />
     <Compile Remove="Services\CmsConfiguration.cs" />
     <Compile Remove="Services\CmsCultureConfiguration.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Mix.Heart" Version="0.0.4.5" />
+    <PackageReference Include="Mix.Heart" Version="0.0.5.6" />
     <PackageReference Include="Mix.Identity" Version="0.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>

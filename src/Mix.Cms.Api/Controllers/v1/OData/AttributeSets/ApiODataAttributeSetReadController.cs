@@ -1,22 +1,22 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Mix.Cms.Lib.Models.Cms;
-using Mix.Cms.Lib;
-using System.Linq.Expressions;
-using Mix.Cms.Lib.ViewModels.MixAttributeSets;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.AspNet.OData;
-using System.Collections.Generic;
-using Microsoft.AspNet.OData.Query;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Mix.Cms.Lib;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.ViewModels;
+using Mix.Cms.Lib.ViewModels.MixAttributeSets;
+using Mix.Domain.Core.ViewModels;
 using Newtonsoft.Json.Linq;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSets
 {
@@ -46,7 +46,7 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSets
             // Get Details if has id or else get default
             if (id > 0)
             {
-                predicate = m => m.Id == id;                
+                predicate = m => m.Id == id;
             }
             else
             {
@@ -86,7 +86,7 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSets
                 return BadRequest(portalResult);
             }
         }
-        
+
         // Save api/odata/{culture}/attribute-set/portal/{id}
         [HttpPost, HttpOptions]
         [Route("{id}")]
@@ -133,7 +133,26 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSets
             return Ok(result);
         }
 
-        #endregion Get
 
+        #endregion Get
+        #region Post
+        [HttpPost, HttpOptions]
+        [Route("apply-list")]
+        public async Task<ActionResult<JObject>> ListActionAsync([FromBody]ListAction<int> data)
+        {
+            Expression<Func<MixAttributeSet, bool>> predicate = model =>
+                       data.Data.Contains(model.Id);
+            var result = new RepositoryResponse<bool>();
+            switch (data.Action)
+            {
+                case "Delete":
+                    return Ok(JObject.FromObject(await base.DeleteListAsync<DeleteViewModel>(predicate, true)));
+                case "Export":
+                    return Ok(JObject.FromObject(await base.ExportListAsync(predicate, MixEnums.MixStructureType.AttributeSet)));
+                default:
+                    return JObject.FromObject(new RepositoryResponse<bool>());
+            }
+        }
+        #endregion
     }
 }

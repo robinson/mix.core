@@ -2,9 +2,9 @@
 using Mix.Cms.Lib.Helpers;
 using Mix.Cms.Lib.Models.Cms;
 using Mix.Domain.Data.ViewModels;
+using Mix.Heart.Helpers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
 {
@@ -51,9 +51,11 @@ namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
         #region Views
 
         [JsonProperty("decryptValue")]
-        public string DecryptValue {
-            get {
-                return !string.IsNullOrEmpty(EncryptKey)? 
+        public string DecryptValue
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(EncryptKey) ?
                         AesEncryptionHelper.DecryptStringFromBytes_Aes(EncryptValue, EncryptKey).Data?.Data
                     : null;
             }

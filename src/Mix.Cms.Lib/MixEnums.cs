@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mix.Cms.Lib
+﻿namespace Mix.Cms.Lib
 {
     public class MixEnums
     {
@@ -77,6 +73,15 @@ namespace Mix.Cms.Lib
             Schedule = 4
         }
 
+        public enum ResponseStatus
+        {
+            Ok = 200,
+            BadRequest = 400,
+            UnAuthorized = 401,
+            Forbidden = 403,
+            ServerError = 500
+        }
+
         public enum MixOrderStatus
         {
             Deleted = 0,
@@ -120,19 +125,24 @@ namespace Mix.Cms.Lib
             ListProduct = 6,
             Gallery = 7
         }
-        
-        public enum MixAttributeSetType
-        {
-            SubPage = 1,
-            SubPost = 2,
-            SubProduct = 3,
-        } 
+
+        //public enum MixAttributeSetType
+        //{
+        //    System = 0,
+        //    Page = 1,
+        //    Post = 2,
+        //    Module = 3,
+        //    Service = 4
+        //}
+
         public enum MixAttributeSetDataType
         {
-            SubSet = 1,
-            SubPost = 2,
-            SubPage = 3,
-            SubModule= 4
+            System = 0,
+            Set = 1,
+            Post = 2,
+            Page = 3,
+            Module = 4,
+            Service = 5
         }
 
         public enum MixDataType
@@ -161,7 +171,7 @@ namespace Mix.Cms.Lib
             //
             // Summary:
             //     Represents a currency value.
-            Currency = 6,
+            Double = 6,
             //
             // Summary:
             //     Represents text that is displayed.
@@ -208,7 +218,7 @@ namespace Mix.Cms.Lib
             VideoYoutube = 20,
             TuiEditor = 21,
             Number = 22,
-            Refferrence = 23,
+            Reference = 23,
         }
 
         public enum UrlAliasType
@@ -232,7 +242,8 @@ namespace Mix.Cms.Lib
         {
             Page,
             Module,
-            Post
+            Post,
+            AttributeSet
         }
         #endregion
 

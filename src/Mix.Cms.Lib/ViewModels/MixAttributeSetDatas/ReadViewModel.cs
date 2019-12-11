@@ -13,28 +13,24 @@ namespace Mix.Cms.Lib.ViewModels.MixAttributeSetDatas
     {
         #region Properties
         #region Models
-
         [JsonProperty("id")]
         public string Id { get; set; }
         [JsonProperty("attributeSetId")]
         public int AttributeSetId { get; set; }
-        [JsonProperty("parentId")]
-        public string ParentId { get; set; }
-        [JsonProperty("parentType")]
-        public int? ParentType { get; set; }
-        [JsonProperty("moduleId")]
-        public int ModuleId { get; set; }
+        [JsonProperty("attributeSetName")]
+        public string AttributeSetName { get; set; }
         [JsonProperty("createdDateTime")]
         public DateTime CreatedDateTime { get; set; }
+        [JsonProperty("createdBy")]
+        public string CreatedBy { get; set; }
         [JsonProperty("status")]
         public int Status { get; set; }
-
         #endregion Models
         #region Views
-
         [JsonProperty("values")]
-        public List<MixAttributeSetValues.UpdateViewModel> Values { get; set; }
-
+        public List<MixAttributeSetValues.ReadViewModel> Values { get; set; }
+        [JsonProperty("fields")]
+        public List<MixAttributeFields.ReadViewModel> Fields { get; set; }
         #endregion
         #endregion Properties
 
@@ -54,9 +50,27 @@ namespace Mix.Cms.Lib.ViewModels.MixAttributeSetDatas
 
         public override void ExpandView(MixCmsContext _context = null, IDbContextTransaction _transaction = null)
         {
-            Values = MixAttributeSetValues.UpdateViewModel
+            Values = MixAttributeSetValues.ReadViewModel
                 .Repository.GetModelListBy(a => a.DataId == Id && a.Specificulture == Specificulture, _context, _transaction).Data.OrderBy(a => a.Priority).ToList();
-
+            Fields = MixAttributeFields.ReadViewModel.Repository.GetModelListBy(f => f.AttributeSetId == AttributeSetId, _context, _transaction).Data;
+            foreach (var field in Fields.OrderBy(f => f.Priority))
+            {
+                var val = Values.FirstOrDefault(v => v.AttributeFieldId == field.Id);
+                if (val == null)
+                {
+                    val = new MixAttributeSetValues.ReadViewModel(
+                        new MixAttributeSetValue() { AttributeFieldId = field.Id }
+                        , _context, _transaction);
+                    val.Field = field;
+                    val.AttributeFieldName = field.Name;
+                    val.StringValue = field.DefaultValue;
+                    val.Priority = field.Priority;
+                    Values.Add(val);
+                }
+                val.AttributeSetName = AttributeSetName;
+                val.Priority = field.Priority;
+                val.Field = field;
+            };
         }
 
         #endregion

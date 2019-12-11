@@ -14,6 +14,7 @@ namespace Mix.Cms.Lib.Models.Cms
 
         public int Id { get; set; }
         public int AttributeSetId { get; set; }
+        public string AttributeSetName { get; set; }
         public string Regex { get; set; }
         public string Title { get; set; }
         public int DataType { get; set; }
@@ -30,7 +31,7 @@ namespace Mix.Cms.Lib.Models.Cms
         public int? ReferenceId { get; set; }
 
         public virtual MixAttributeSet AttributeSet { get; set; }
-        public virtual MixAttributeSet Referrence { get; set; }
+        public virtual MixAttributeSet Reference { get; set; }
         public virtual ICollection<MixModuleAttributeValue> MixModuleAttributeValue { get; set; }
         public virtual ICollection<MixPageAttributeValue> MixPageAttributeValue { get; set; }
         public virtual ICollection<MixPostAttributeValue> MixPostAttributeValue { get; set; }

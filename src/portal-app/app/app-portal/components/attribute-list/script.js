@@ -13,13 +13,14 @@ modules.component('attributeList', {
                 }
             };
             ctrl.addAttr = function () {
-                if (ctrl.attributes) {
+                if (ctrl.fields) {
                     var t = angular.copy(ctrl.defaultAttr);
-                    ctrl.attributes.push(t);
+                    t.priority = ctrl.fields.length +1;
+                    ctrl.fields.push(t);
                 }
             };
             ctrl.removeAttribute = function(attr, index){
-                ctrl.attributes.splice(index,1);
+                ctrl.fields.splice(index,1);
                 ctrl.removeAttributes.push(attr);
             };
             ctrl.addOption = function (col, index) {
@@ -89,7 +90,6 @@ modules.component('attributeList', {
                     formHtml.appendChild(el);      
                     
                 });
-                console.log(formHtml);
                 ctrl.activedData.formView.content = formHtml.innerHTML;
             };
     
@@ -97,18 +97,18 @@ modules.component('attributeList', {
                 col.name = $rootScope.generateKeyword(col.title, '_');
             };
             ctrl.removeAttr = function (index) {
-                if (ctrl.attributes) {
-                    ctrl.attributes.splice(index, 1);
+                if (ctrl.fields) {
+                    ctrl.fields.splice(index, 1);
                 }
             };
             ctrl.updateOrders = function(index){
                 if(index> ctrl.dragStartIndex){
-                    ctrl.attributes.splice(ctrl.dragStartIndex, 1);
+                    ctrl.fields.splice(ctrl.dragStartIndex, 1);
                 }
                 else{
-                    ctrl.attributes.splice(ctrl.dragStartIndex+1, 1);
+                    ctrl.fields.splice(ctrl.dragStartIndex+1, 1);
                 }
-                angular.forEach(ctrl.attributes, function(e,i){
+                angular.forEach(ctrl.fields, function(e,i){
                     e.priority = i;
                 });
             };           
@@ -121,14 +121,15 @@ modules.component('attributeList', {
             };
             ctrl.referenceCallback = function(selected){
                 if (selected && selected.length) {
+                    ctrl.colRef.reference = selected;
                     ctrl.colRef.referenceId = selected[0].id;
                 }                
                 $('#modal-navs').modal('hide');
             };
         }],
     bindings: {
-        title: '=',
-        attributes: '=',
+        header: '=',
+        fields: '=',
         removeAttributes: '='
     }
 });

@@ -7,12 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\v1\Mix\AttributeSetDataValues\**" />
+    <Content Remove="Controllers\v1\Mix\AttributeSetDataValues\**" />
+    <EmbeddedResource Remove="Controllers\v1\Mix\AttributeSetDataValues\**" />
+    <None Remove="Controllers\v1\Mix\AttributeSetDataValues\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Controllers\v1\Mix\AttributeSetDataValues\ApiODataAttributeSetValuePortalController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.2.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 

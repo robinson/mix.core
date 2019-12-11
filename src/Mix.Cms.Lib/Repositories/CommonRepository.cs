@@ -1,11 +1,11 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the GNU General Public License v3.0.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the GNU General Public License v3.0.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.EntityFrameworkCore.Storage;
 using Mix.Cms.Lib.Models.Cms;
-using Mix.Domain.Core.Models;
 using Mix.Cms.Lib.ViewModels.MixSystem;
+using Mix.Domain.Core.Models;
 using System;
 using System.Collections.Generic;
 
@@ -20,8 +20,10 @@ namespace Mix.Cms.Lib.Repositories
         {
         }
 
-        public static CommonRepository Instance {
-            get {
+        public static CommonRepository Instance
+        {
+            get
+            {
                 if (instance == null)
                 {
                     lock (syncRoot)

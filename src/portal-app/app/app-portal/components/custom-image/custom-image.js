@@ -1,16 +1,16 @@
 ﻿modules.component('customImage', {
     templateUrl: '/app/app-portal/components/custom-image/custom-image.html',
     bindings: {
-        header: '=',
-        description: '=',
+        header: '=?',
+        description: '=?',
         src: '=',
         srcUrl: '=',
-        postedFile: '=',
-        type: '=',
-        folder: '=',
+        postedFile: '=?',
+        type: '=?',
+        folder: '=?',
         auto: '=',
-        onDelete: '&',
-        onUpdate: '&'
+        onDelete: '&?',
+        onUpdate: '&?'
     },
     controller: ['$rootScope', '$scope', 'ngAppSettings', 'MediaService', function ($rootScope, $scope, ngAppSettings, mediaService) {
         var ctrl = this;
@@ -18,7 +18,7 @@
         var image_placeholder = '/assets/img/image_placeholder.jpg';
         ctrl.isImage = false;
         ctrl.mediaNavs = [];
-        ctrl.init = function () {
+        ctrl.$onInit = function () {
             ctrl.srcUrl = ctrl.srcUrl || image_placeholder;
             ctrl.isImage = ctrl.srcUrl.toLowerCase().match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
             ctrl.maxHeight = ctrl.maxHeight || '200px';
@@ -35,6 +35,7 @@
         ctrl.$doCheck = function () {
             if (ctrl.src !== ctrl.srcUrl && ctrl.srcUrl != image_placeholder) {
                 ctrl.src = ctrl.srcUrl;
+                ctrl.isImage = ctrl.srcUrl.toLowerCase().match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
             }
         }.bind(ctrl);
 
@@ -45,7 +46,7 @@
                 ctrl.mediaFile.description = ctrl.description ? ctrl.description : '';
                 ctrl.mediaFile.file = file;
 
-                if (ctrl.auto) {
+                if (ctrl.auto=='true') {
                     ctrl.uploadFile(file);
                 }
                 else {
@@ -73,6 +74,7 @@
                         if (resp && resp.isSucceed) {
                             ctrl.src = resp.data.fullPath;
                             ctrl.srcUrl = resp.data.fullPath;
+                            ctrl.isImage = ctrl.srcUrl.toLowerCase().match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
                             $rootScope.isBusy = false;
                             $scope.$apply();
                         }
@@ -93,17 +95,20 @@
             }
         };
         ctrl.getBase64 = function (file) {
-            if (file !== null && ctrl.postedFile) {
+            if (file !== null) {
                 $rootScope.isBusy = true;
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = function () {
                     var index = reader.result.indexOf(',') + 1;
                     var base64 = reader.result.substring(index);
-                    ctrl.postedFile.fileName = file.name.substring(0, file.name.lastIndexOf('.'));
-                    ctrl.postedFile.extension = file.name.substring(file.name.lastIndexOf('.'));
-                    ctrl.postedFile.fileStream = reader.result;
+                    if(ctrl.postedFile){
+                        ctrl.postedFile.fileName = file.name.substring(0, file.name.lastIndexOf('.'));
+                        ctrl.postedFile.extension = file.name.substring(file.name.lastIndexOf('.'));
+                        ctrl.postedFile.fileStream = reader.result;
+                    }
                     ctrl.srcUrl = reader.result;
+                    ctrl.isImage = ctrl.srcUrl.indexOf('data:image/') >= 0 || ctrl.srcUrl.toLowerCase().match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
                     ctrl.src = reader.result;
                     $rootScope.isBusy = false;
                     $scope.$apply();

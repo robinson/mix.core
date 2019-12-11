@@ -1,17 +1,14 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Mvc;
-using Mix.Domain.Core.ViewModels;
-using Mix.Cms.Lib.ViewModels;
-using Mix.Cms.Lib.Repositories;
-using Mix.Cms.Lib;
-using Mix.Common.Helper;
-using Microsoft.AspNetCore.SignalR;
-using Mix.Cms.Hub;
 using Microsoft.Extensions.Caching.Memory;
 using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.Repositories;
+using Mix.Cms.Lib.ViewModels;
+using Mix.Common.Helper;
+using Mix.Domain.Core.ViewModels;
 
 namespace Mix.Cms.Api.Controllers.v1
 {
@@ -32,7 +29,7 @@ namespace Mix.Cms.Api.Controllers.v1
             // Request: Key => folder, Keyword => filename
             if (!string.IsNullOrEmpty(folder))
             {
-                var file = FileRepository.Instance.GetWebFile(filename, folder);
+                var file = FileRepository.Instance.GetFile(filename, folder);
 
                 return new RepositoryResponse<FileViewModel>()
                 {
@@ -90,7 +87,7 @@ namespace Mix.Cms.Api.Controllers.v1
         {
             if (model != null)
             {
-                var result = FileRepository.Instance.SaveWebFile(model);
+                var result = FileRepository.Instance.SaveFile(model);
                 return new RepositoryResponse<FileViewModel>()
                 {
                     IsSucceed = result,

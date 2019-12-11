@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Mix.Cms.Lib.Helpers;
 using Mix.Cms.Lib.Models.Cms;
-using Mix.Cms.Lib.Services;
 using Mix.Domain.Data.ViewModels;
+using Mix.Heart.Helpers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
 {
@@ -22,7 +21,7 @@ namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
         [JsonProperty("attributeFieldId")]
         public int AttributeFieldId { get; set; }
         [JsonProperty("dataType")]
-        public int DataType { get; set; }
+        public MixEnums.MixDataType DataType { get; set; }
         [JsonProperty("attributeName")]
         public string AttributeName { get; set; }
         [JsonProperty("postId")]
@@ -72,7 +71,7 @@ namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
         #region Overrides
         public override void ExpandView(MixCmsContext _context = null, IDbContextTransaction _transaction = null)
         {
-            Field = MixAttributeFields.UpdateViewModel.Repository.GetSingleModel(f => f.Id == AttributeFieldId, _context, _transaction).Data;            
+            Field = MixAttributeFields.UpdateViewModel.Repository.GetSingleModel(f => f.Id == AttributeFieldId, _context, _transaction).Data;
             Priority = Field.Priority;
         }
         public override void Validate(MixCmsContext _context, IDbContextTransaction _transaction)
@@ -93,7 +92,7 @@ namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
                 if (Field.IsUnique)
                 {
                     IsValid = IsValid && Repository.Count(
-                        f => f.AttributeFieldId == AttributeFieldId && f.Id != Id 
+                        f => f.AttributeFieldId == AttributeFieldId && f.Id != Id
                         && f.StringValue == StringValue && f.Specificulture == Specificulture, _context, _transaction)
                         .Data == 0;
                     if (!IsValid)
@@ -101,7 +100,7 @@ namespace Mix.Cms.Lib.ViewModels.MixPostAttributeValues
                         Errors.Add($"{Field.Title} is existed");
                     }
                 }
-                
+
             }
         }
         public override MixPostAttributeValue ParseModel(MixCmsContext _context = null, IDbContextTransaction _transaction = null)

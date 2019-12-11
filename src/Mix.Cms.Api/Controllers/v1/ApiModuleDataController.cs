@@ -1,22 +1,21 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.Services;
+using Mix.Cms.Lib.ViewModels.MixModuleDatas;
+using Mix.Common.Helper;
+using Mix.Domain.Core.ViewModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mix.Domain.Core.ViewModels;
-using Mix.Cms.Lib.Models.Cms;
 using System.Linq.Expressions;
-using Mix.Cms.Lib.ViewModels.MixModuleDatas;
-using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 using System.Web;
-using Microsoft.AspNetCore.Authorization;
-using Mix.Common.Helper;
-using Mix.Cms.Lib.Services;
-using static Mix.Cms.Lib.MixEnums;
 
 namespace Mix.Cms.Api.Controllers.v1
 {
@@ -145,7 +144,7 @@ namespace Mix.Cms.Api.Controllers.v1
                 };
             }
         }
-        
+
         // GET api/module-data/create/id
         [AllowAnonymous]
         [HttpPost, HttpOptions]
@@ -183,7 +182,7 @@ namespace Mix.Cms.Api.Controllers.v1
 
         // GET api/module-data/create/id
         [AllowAnonymous]
-        [HttpGet, HttpOptions]        
+        [HttpGet, HttpOptions]
         [Route("init/{moduleId}")]
         public async Task<RepositoryResponse<UpdateViewModel>> InitByIdAsync(int moduleId)
         {
@@ -251,6 +250,7 @@ namespace Mix.Cms.Api.Controllers.v1
             Expression<Func<MixModuleData, bool>> predicate = model =>
                 model.Specificulture == _lang
                 && model.ModuleId == moduleId
+                && (string.IsNullOrEmpty(request.Keyword) || model.Value.Contains(request.Keyword))
                 && (postId == 0 || model.PostId == postId)
                 && (pageId == 0 || model.PageId == pageId)
                 && (!request.FromDate.HasValue
@@ -289,11 +289,13 @@ namespace Mix.Cms.Api.Controllers.v1
             int.TryParse(query.Get("post_id"), out int postId);
             int.TryParse(query.Get("product_id"), out int productId);
             int.TryParse(query.Get("category_id"), out int pageId);
+            
             string key = $"{request.Key}_{request.PageSize}_{request.PageIndex}";
             Expression<Func<MixModuleData, bool>> predicate = model =>
                 model.Specificulture == _lang
                 && model.ModuleId == moduleId
-                && (postId==0 || model.PostId == postId)
+                && (string.IsNullOrEmpty(request.Keyword) || model.Value.Contains(request.Keyword))
+                && (postId == 0 || model.PostId == postId)
                 && (pageId == 0 || model.PageId == pageId)
                 && (!request.FromDate.HasValue
                     || (model.CreatedDateTime >= request.FromDate.Value.ToUniversalTime())
@@ -322,7 +324,7 @@ namespace Mix.Cms.Api.Controllers.v1
                 return new RepositoryResponse<List<ReadViewModel>>();
             }
         }
-        
+
         #endregion Post
     }
 }

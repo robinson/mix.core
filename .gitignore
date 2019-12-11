@@ -13,8 +13,8 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
+# [Rr]elease/
+# [Rr]eleases/
 [Xx]64/
 [Xx]86/
 [Bb]uild/
@@ -221,6 +221,9 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
+azure-pipelines.yml
+appsettings.json
+
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
 **/*.DesktopClient/GeneratedArtifacts
@@ -283,3 +286,12 @@ src/Mix\.Cms\.Web/Cache/
 /src/Mix.Cms.Web/Views/Shared/Templates
 
 .DS_Store
+
+.vscode/
+
+src/Mix.Cms.Web/appsettings.*.json
+/src/_MixCore.sln
+
+src/Mix.Cms.Web/logs/
+
+src/Mix.Cms.Web.old/

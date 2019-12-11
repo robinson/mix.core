@@ -1,24 +1,23 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.Services;
+using Mix.Cms.Lib.ViewModels;
+using Mix.Cms.Lib.ViewModels.MixPositions;
+using Mix.Domain.Core.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mix.Domain.Core.ViewModels;
-using Mix.Cms.Lib.Models.Cms;
-using Mix.Cms.Lib.Services;
-using static Mix.Cms.Lib.MixEnums;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
-using Mix.Cms.Lib.ViewModels.MixPositions;
-using Microsoft.Extensions.Caching.Memory;
-using Mix.Cms.Lib.ViewModels;
+using static Mix.Cms.Lib.MixEnums;
 
 namespace Mix.Cms.Api.Controllers.v1
 {

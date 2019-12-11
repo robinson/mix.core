@@ -1,26 +1,28 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using Mix.Cms.Lib.Models.Cms;
-using System.Linq.Expressions;
-using Mix.Cms.Lib.ViewModels.MixAttributeSetDatas;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.AspNet.OData;
-using System.Collections.Generic;
-using Microsoft.AspNet.OData.Query;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Mix.Cms.Lib;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.ViewModels;
+using Mix.Cms.Lib.ViewModels.MixAttributeSetDatas;
+using Mix.Domain.Core.ViewModels;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSetDatas
 {
     [Produces("application/json")]
     [Route("api/v1/odata/{culture}/attribute-set-data/read")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "SuperAdmin, Admin")]
+    [AllowAnonymous]
     public class ApiODataAttributeSetDataReadController :
         BaseApiODataController<MixCmsContext, MixAttributeSetData>
     {
@@ -36,24 +38,14 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSetDatas
         [EnableQuery]
         [HttpGet, HttpOptions]
         [Route("{id}")]
-        public async Task<ActionResult<ReadViewModel>> Details(string culture, string id)
+        [Route("{id}/{attributeSetId}")]
+        public async Task<ActionResult<ReadViewModel>> Details(string culture, string id, int attributeSetId)
         {
             string msg = string.Empty;
             Expression<Func<MixAttributeSetData, bool>> predicate = null;
             MixAttributeSetData model = null;
             // Get Details if has id or else get default
-            if (id != "default")
-            {
-                predicate = m => m.Id == id && m.Specificulture == _lang; 
-            }
-            else
-            {
-                model = new MixAttributeSetData()
-                {
-                    Specificulture = _lang,
-                    Priority = ReadViewModel.Repository.Max(p => p.Priority).Data + 1
-                };
-            }
+            predicate = m => m.Id == id && m.Specificulture == _lang;
 
             var portalResult = await base.GetSingleAsync<ReadViewModel>(id.ToString(), predicate, model);
 
@@ -68,6 +60,15 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSetDatas
         public async System.Threading.Tasks.Task<ActionResult<int>> CountAsync()
         {
             return (await ReadViewModel.Repository.CountAsync()).Data;
+        }
+        // GET api/attribute-set-datas/portal/count
+        [AllowAnonymous]
+        [EnableQuery]
+        [Route("count/{name}")]
+        [HttpGet, HttpOptions]
+        public async System.Threading.Tasks.Task<ActionResult<int>> CountByName(string name)
+        {
+            return (await ReadViewModel.Repository.CountAsync(m=>m.AttributeSetName== name && m.Specificulture== _lang)).Data;
         }
 
         // Save api/odata/{culture}/attribute-set-data/portal
@@ -85,7 +86,7 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSetDatas
                 return BadRequest(portalResult);
             }
         }
-        
+
         // Save api/odata/{culture}/attribute-set-data/portal/{id}
         [HttpPost, HttpOptions]
         [Route("{id}")]
@@ -133,6 +134,23 @@ namespace Mix.Cms.Api.Controllers.v1.OData.AttributeSetDatas
         }
 
         #endregion Get
-
+        [HttpPost, HttpOptions]
+        [Route("apply-list")]
+        public async Task<ActionResult<JObject>> ListActionAsync([FromBody]ListAction<string> data)
+        {
+            Expression<Func<MixAttributeSetData, bool>> predicate = model =>
+                       model.Specificulture == _lang
+                       && data.Data.Contains(model.Id);
+            var result = new RepositoryResponse<bool>();
+            switch (data.Action)
+            {
+                case "Delete":
+                    return Ok(JObject.FromObject(await base.DeleteListAsync<DeleteViewModel>(predicate, true)));
+                case "Export":
+                    return Ok(JObject.FromObject(await base.ExportListAsync(predicate, MixEnums.MixStructureType.AttributeSet)));
+                default:
+                    return JObject.FromObject(new RepositoryResponse<bool>());
+            }
+        }
     }
 }

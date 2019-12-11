@@ -87,7 +87,6 @@ modules.component('propertiesStructure', {
                     formHtml.appendChild(el);      
                     
                 });
-                console.log(formHtml);
                 ctrl.activedData.formView.content = formHtml.innerHTML;
             };
     
@@ -101,7 +100,7 @@ modules.component('propertiesStructure', {
             }
         }],
     bindings: {
-        title: '=',
+        header: '=',
         columns: '='
     }
 });

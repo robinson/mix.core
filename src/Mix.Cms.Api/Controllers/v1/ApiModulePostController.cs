@@ -1,24 +1,22 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Mix.Cms.Lib;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.Services;
+using Mix.Cms.Lib.ViewModels.MixModulePosts;
+using Mix.Domain.Core.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mix.Domain.Core.ViewModels;
-using Mix.Cms.Lib.Models.Cms;
-using Mix.Cms.Lib;
-using Mix.Cms.Lib.Services;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
-using Mix.Cms.Lib.ViewModels.MixModulePosts;
-using Microsoft.AspNetCore.SignalR;
-using Mix.Cms.Hub;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Mix.Cms.Api.Controllers.v1
 {
@@ -59,7 +57,8 @@ namespace Mix.Cms.Api.Controllers.v1
                         var portalResult = await base.GetSingleAsync<ReadViewModel>($"{viewType}_{moduleId}_{postId}", predicate);
                         if (portalResult.IsSucceed)
                         {
-                            portalResult.Data.Post.DetailsUrl = MixCmsHelper.GetRouterUrl("Post", new { portalResult.Data.Post.SeoName }, Request, Url);
+                            portalResult.Data.Post.DetailsUrl = MixCmsHelper.GetRouterUrl(
+                                new { culture = _lang, action = "post", portalResult.Data.Post.SeoName }, Request, Url);
                         }
 
                         return Ok(JObject.FromObject(portalResult));
@@ -149,18 +148,18 @@ namespace Mix.Cms.Api.Controllers.v1
 
                     var listItemResult = await base.GetListAsync<ReadViewModel>(key, request, predicate);
                     listItemResult.Data.Items.ForEach(n => n.Post.DetailsUrl = MixCmsHelper.GetRouterUrl(
-                                "post",  new { id = n.Post.Id, seoName = n.Post.SeoName }, Request, Url));
+                                new { culture = _lang, action = "post", id = n.Post.Id, seoName = n.Post.SeoName }, Request, Url));
                     return JObject.FromObject(listItemResult);
             }
         }
-        
+
         // POST api/update-infos
         [HttpPost, HttpOptions]
         [Route("update-infos")]
         public async Task<RepositoryResponse<List<ReadViewModel>>> UpdateInfos([FromBody]List<ReadViewModel> models)
         {
             if (models != null)
-            {                
+            {
                 return await base.SaveListAsync(models, false);
             }
             else

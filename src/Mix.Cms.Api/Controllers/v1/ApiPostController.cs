@@ -1,25 +1,25 @@
-﻿// Licensed to the Mix I/O Foundation under one or more agreements.
-// The Mix I/O Foundation licenses this file to you under the MIT license.
+﻿// Licensed to the Mixcore Foundation under one or more agreements.
+// The Mixcore Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using Mix.Cms.Lib;
+using Mix.Cms.Lib.Models.Cms;
+using Mix.Cms.Lib.Services;
+using Mix.Cms.Lib.ViewModels;
+using Mix.Cms.Lib.ViewModels.MixPosts;
+using Mix.Domain.Core.ViewModels;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Mix.Domain.Core.ViewModels;
-using Mix.Cms.Lib.Models.Cms;
-using Mix.Cms.Lib;
-using Mix.Cms.Lib.Services;
-using static Mix.Cms.Lib.MixEnums;
 using System.Linq.Expressions;
-using Mix.Cms.Lib.ViewModels.MixPosts;
+using System.Threading.Tasks;
 using System.Web;
-using Microsoft.Extensions.Caching.Memory;
-using Mix.Cms.Lib.ViewModels;
+using static Mix.Cms.Lib.MixEnums;
 
 namespace Mix.Cms.Api.Controllers.v1
 {
@@ -35,7 +35,7 @@ namespace Mix.Cms.Api.Controllers.v1
         #region Get
 
         // GET api/post/id
-        
+
         [HttpGet, HttpOptions]
         [Route("delete/{id}")]
         public async Task<RepositoryResponse<MixPost>> DeleteAsync(int id)
@@ -61,7 +61,8 @@ namespace Mix.Cms.Api.Controllers.v1
                         var portalResult = await base.GetSingleAsync<UpdateViewModel>($"{viewType}_{id}", predicate);
                         if (portalResult.IsSucceed)
                         {
-                            portalResult.Data.DetailsUrl = MixCmsHelper.GetRouterUrl("Post", new { id = portalResult.Data.Id, SeoName = portalResult.Data.SeoName }, Request, Url);
+                            portalResult.Data.DetailsUrl = MixCmsHelper.GetRouterUrl(
+                                new { culture = _lang, action = "post", id = portalResult.Data.Id, SeoName = portalResult.Data.SeoName }, Request, Url);
                         }
 
                         return Ok(JObject.FromObject(portalResult));
@@ -84,7 +85,8 @@ namespace Mix.Cms.Api.Controllers.v1
                         var beResult = await ReadMvcViewModel.Repository.GetSingleModelAsync(model => model.Id == id && model.Specificulture == _lang).ConfigureAwait(false);
                         if (beResult.IsSucceed)
                         {
-                            beResult.Data.DetailsUrl = MixCmsHelper.GetRouterUrl("Post", new { id = beResult.Data.Id, beResult.Data.SeoName }, Request, Url);
+                            beResult.Data.DetailsUrl = MixCmsHelper.GetRouterUrl(
+                                new { culture = _lang, action = "post", id = beResult.Data.Id, beResult.Data.SeoName }, Request, Url);
                         }
                         return Ok(JObject.FromObject(beResult));
                     }
@@ -211,6 +213,17 @@ namespace Mix.Cms.Api.Controllers.v1
 
             switch (request.Key)
             {
+                case "service.store":
+                    var srvResult = await base.GetListAsync<Lib.ViewModels.Services.Store.PostViewModel>(key, request, predicate);
+                    if (srvResult.IsSucceed)
+                    {
+                        srvResult.Data.Items.ForEach(a =>
+                        {
+                            a.DetailsUrl = MixCmsHelper.GetRouterUrl(
+                                new { culture = _lang, action = "post", id = a.Id, seoName = a.SeoName }, Request, Url);
+                        });
+                    }
+                    return Ok(JObject.FromObject(srvResult));
                 case "mvc":
                     var mvcResult = await base.GetListAsync<ReadMvcViewModel>(key, request, predicate);
                     if (mvcResult.IsSucceed)
@@ -218,10 +231,9 @@ namespace Mix.Cms.Api.Controllers.v1
                         mvcResult.Data.Items.ForEach(a =>
                         {
                             a.DetailsUrl = MixCmsHelper.GetRouterUrl(
-                                "Post", new { id = a.Id, seoName = a.SeoName }, Request, Url);
+                                new { culture = _lang, action = "post", id = a.Id, seoName = a.SeoName }, Request, Url);
                         });
                     }
-
                     return Ok(JObject.FromObject(mvcResult));
                 case "portal":
                     var portalResult = await base.GetListAsync<UpdateViewModel>(key, request, predicate);
@@ -230,10 +242,9 @@ namespace Mix.Cms.Api.Controllers.v1
                         portalResult.Data.Items.ForEach(a =>
                         {
                             a.DetailsUrl = MixCmsHelper.GetRouterUrl(
-                                "Post", new { id = a.Id, seoName = a.SeoName }, Request, Url);
+                                new { culture = _lang, action = "post", id = a.Id, seoName = a.SeoName }, Request, Url);
                         });
                     }
-
                     return Ok(JObject.FromObject(portalResult));
                 default:
 
@@ -243,7 +254,7 @@ namespace Mix.Cms.Api.Controllers.v1
                         listItemResult.Data.Items.ForEach((Action<ReadListItemViewModel>)(a =>
                         {
                             a.DetailsUrl = MixCmsHelper.GetRouterUrl(
-                                "Post", new { id = a.Id, seoName = a.SeoName }, Request, Url);
+                                new { culture = _lang, action = "post", id = a.Id, seoName = a.SeoName }, Request, Url);
                         }));
                     }
 
