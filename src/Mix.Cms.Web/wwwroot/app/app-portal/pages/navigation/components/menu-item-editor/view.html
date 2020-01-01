@@ -3,7 +3,7 @@
         <h6 class="control-label m-0" ng-if="$ctrl.isShowTitle=='true'" ng-bind="$ctrl.attributeValue.field.title"></h6>
         <small class="text-muted">
             <!--custom-->
-            (menu item)
+            (Menu item)
         </small>
     </div>
     <div class="col-9 pb-4">
@@ -15,9 +15,9 @@
                 before input it child's data!
             </div>
             <div class="row" ng-if="$ctrl.attributeValue.dataId">
-                <div class="col-md-12">
-                    <a href="/portal/navigation/create?attributeSetName={{$ctrl.attributeValue.attributeSetName}}&attributeSetId={{$ctrl.attributeValue.field.referenceId}}&dataId=default&refParentId={{$ctrl.parentId}}&refParentType={{$ctrl.parentType}}" class="btn btn-sm btn-primary float-right px-4 mr-2">
-                        <i class="fas fa-plus"></i> Create data
+                <div class="col-md-12 mb-3">
+                    <a href="/portal/navigation/create?attributeSetName=menu_item&attributeSetId=1&dataId=default&refParentId={{$ctrl.parentId}}&refParentType={{$ctrl.parentType}}" class="btn btn-sm btn-primary float-right px-4 mr-2">
+                        <i class="fas fa-plus"></i> Create item
                     </a>
                 </div>
                 <div class="col-md-12">

@@ -13,7 +13,8 @@
             ctrl.types = ['Page', 'Post'];
             ctrl.type = 'Page';
             ctrl.navs = [];
-            ctrl.data = { items: [] }
+            ctrl.data = { items: [] };
+            ctrl.goToPath = $rootScope.goToPath;
             ctrl.loadData = async function (pageIndex) {
                 ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
@@ -28,7 +29,7 @@
                     var d = new Date(ctrl.request.toDate);
                     ctrl.request.toDate = d.toISOString();
                 }
-
+                
                 switch (ctrl.type) {
                     case 'Page':
                         var response = await pageService.getList(ctrl.request);
@@ -47,6 +48,8 @@
                         var response = await postService.getList(ctrl.request);
                         if (response.isSucceed) {
                             ctrl.data = response.data;
+                            $rootScope.isBusy = false;
+                            $scope.$apply();
                         }
                         else {
                             $rootScope.showErrors(response.errors);
@@ -56,10 +59,23 @@
                         break;
                 }
             };
+            ctrl.edit = function (nav) {
+                switch (ctrl.type) {
+                    case 'Page':
+                        ctrl.goToPath(`/portal/page/details/${nav.id}`);
+                        break;
+                    case 'Post':
+                        ctrl.goToPath(`/portal/post/details/${nav.id}`);
+                        break;
+                    case 'Module':
+                        ctrl.goToPath(`/portal/module/details/${nav.id}`);
+                        break;
+                }
+            }
             ctrl.select = function (nav) {
                 var current = $rootScope.findObjectByKey(ctrl.data.items, 'id', nav.id);
-                if(!nav.isActive && ctrl.callback){
-                    ctrl.callback({nav: nav, type: ctrl.type});
+                if (!nav.isActive && ctrl.callback) {
+                    ctrl.callback({ nav: nav, type: ctrl.type });
                 }
                 if (ctrl.isMultiple) {
                     current.isActive = !current.isActive;
@@ -72,9 +88,9 @@
                     }
                     current.isActive = !nav.isActive;
                 }
-            }
+            };
             ctrl.saveSelected = function () {
-                ctrl.selected = $rootScope.filterArray(ctrl.data, 'isActived', true);
+                ctrl.selected = $rootScope.filterArray(ctrl.data, ['isActived'], [true]);
                 setTimeout(() => {
                     ctrl.save().then(() => {
                         ctrl.loadPosts();

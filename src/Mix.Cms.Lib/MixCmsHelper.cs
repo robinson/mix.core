@@ -156,8 +156,7 @@ namespace Mix.Cms.Lib
                 return false;
             }
             number = number.Replace(",", "");
-
-            return double.TryParse(number, out double t);
+            return double.TryParse(number, out _);
         }
 
         public static double ReversePrice(string formatedPrice)
@@ -245,19 +244,10 @@ namespace Mix.Cms.Lib
 
         public static async System.Threading.Tasks.Task<ViewModels.MixPages.ReadMvcViewModel> GetPageAsync(int id, string culture)
         {
-            var cacheKey = $"vm_{culture}_page_{id}_mvc";
             RepositoryResponse<ViewModels.MixPages.ReadMvcViewModel> getPage = null;
-            //if (MixService.GetConfig<bool>("IsCache"))
-            //{
-            //    getPage = await MixCacheService.GetAsync<RepositoryResponse<ViewModels.MixPages.ReadMvcViewModel>>(cacheKey);
-            //}
             if (getPage == null)
             {
-                getPage = ViewModels.MixPages.ReadMvcViewModel.Repository.GetSingleModel(m => m.Id == id && m.Specificulture == culture);
-                //if (getPage.IsSucceed)
-                //{
-                //    await MixCacheService.SetAsync(cacheKey, getPage);
-                //}
+                getPage = await ViewModels.MixPages.ReadMvcViewModel.Repository.GetSingleModelAsync(m => m.Id == id && m.Specificulture == culture);
             }
 
             return getPage.Data;
@@ -290,10 +280,12 @@ namespace Mix.Cms.Lib
 
         }
 
-        public static async System.Threading.Tasks.Task<JObject> GetNavigation(string name, string culture)
+        public static async System.Threading.Tasks.Task<ViewModels.MixAttributeSetDatas.Navigation> GetNavigation(string name, string culture)
         {
             var navs = await ViewModels.MixAttributeSetDatas.Helper.FilterByKeywordAsync<ViewModels.MixAttributeSetDatas.NavigationViewModel>(culture, "navigation", "equal", "name", name);
-            return navs.Data.FirstOrDefault()?.Data;
+            return navs.Data.FirstOrDefault()?.Nav;
         }
+
+        
     }
 }
